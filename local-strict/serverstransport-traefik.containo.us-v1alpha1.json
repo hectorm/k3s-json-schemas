@@ -1,0 +1,144 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "description": "ServersTransport is a specification for a ServersTransport resource.",
+  "properties": {
+    "apiVersion": {
+      "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "enum": [
+        "traefik.containo.us/v1alpha1"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "kind": {
+      "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "enum": [
+        "ServersTransport"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "metadata": {
+      "$ref": "_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta_v2",
+      "description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
+    },
+    "spec": {
+      "additionalProperties": false,
+      "description": "ServersTransportSpec options to configure communication between Traefik and the servers.",
+      "properties": {
+        "certificatesSecrets": {
+          "description": "Certificates for mTLS.",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "disableHTTP2": {
+          "description": "Disable HTTP/2 for connections with backend servers.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "forwardingTimeouts": {
+          "additionalProperties": false,
+          "description": "Timeouts for requests forwarded to the backend servers.",
+          "properties": {
+            "dialTimeout": {
+              "description": "DialTimeout is the amount of time to wait until a connection to a backend server can be established. If zero, no timeout exists.",
+              "x-kubernetes-int-or-string": true
+            },
+            "idleConnTimeout": {
+              "description": "IdleConnTimeout is the maximum period for which an idle HTTP keep-alive connection will remain open before closing itself.",
+              "x-kubernetes-int-or-string": true
+            },
+            "pingTimeout": {
+              "description": "PingTimeout is the timeout after which the HTTP/2 connection will be closed if a response to ping is not received.",
+              "x-kubernetes-int-or-string": true
+            },
+            "readIdleTimeout": {
+              "description": "ReadIdleTimeout is the timeout after which a health check using ping frame will be carried out if no frame is received on the HTTP/2 connection. If zero, no health check is performed.",
+              "x-kubernetes-int-or-string": true
+            },
+            "responseHeaderTimeout": {
+              "description": "ResponseHeaderTimeout is the amount of time to wait for a server's response headers after fully writing the request (including its body, if any). If zero, no timeout exists.",
+              "x-kubernetes-int-or-string": true
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "insecureSkipVerify": {
+          "description": "Disable SSL certificate verification.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "maxIdleConnsPerHost": {
+          "description": "If non-zero, controls the maximum idle (keep-alive) to keep per-host. If zero, DefaultMaxIdleConnsPerHost is used.",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "peerCertURI": {
+          "description": "URI used to match against SAN URI during the peer certificate verification.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "rootCAsSecrets": {
+          "description": "Add cert file for self-signed certificate.",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "serverName": {
+          "description": "ServerName used to contact the server.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "metadata",
+    "spec"
+  ],
+  "type": "object",
+  "x-kubernetes-group-version-kind": [
+    {
+      "group": "traefik.containo.us",
+      "kind": "ServersTransport",
+      "version": "v1alpha1"
+    }
+  ]
+}
