@@ -1,0 +1,1304 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "description": "Middleware is a specification for a Middleware resource.",
+  "properties": {
+    "apiVersion": {
+      "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "enum": [
+        "traefik.containo.us/v1alpha1"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "kind": {
+      "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "enum": [
+        "Middleware"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "metadata": {
+      "$ref": "_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta",
+      "description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
+    },
+    "spec": {
+      "additionalProperties": false,
+      "description": "MiddlewareSpec holds the Middleware configuration.",
+      "properties": {
+        "addPrefix": {
+          "additionalProperties": false,
+          "description": "AddPrefix holds the AddPrefix configuration.",
+          "properties": {
+            "prefix": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "basicAuth": {
+          "additionalProperties": false,
+          "description": "BasicAuth holds the HTTP basic authentication configuration.",
+          "properties": {
+            "headerField": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "realm": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "removeHeader": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "secret": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "buffering": {
+          "additionalProperties": false,
+          "description": "Buffering holds the request/response buffering configuration.",
+          "properties": {
+            "maxRequestBodyBytes": {
+              "format": "int64",
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "maxResponseBodyBytes": {
+              "format": "int64",
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "memRequestBodyBytes": {
+              "format": "int64",
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "memResponseBodyBytes": {
+              "format": "int64",
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "retryExpression": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "chain": {
+          "additionalProperties": false,
+          "description": "Chain holds a chain of middlewares.",
+          "properties": {
+            "middlewares": {
+              "items": {
+                "additionalProperties": false,
+                "description": "MiddlewareRef is a ref to the Middleware resources.",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "namespace": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "name"
+                ],
+                "type": [
+                  "object",
+                  "null"
+                ]
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "circuitBreaker": {
+          "additionalProperties": false,
+          "description": "CircuitBreaker holds the circuit breaker configuration.",
+          "properties": {
+            "expression": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "compress": {
+          "additionalProperties": false,
+          "description": "Compress holds the compress configuration.",
+          "properties": {
+            "excludedContentTypes": {
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "contentType": {
+          "additionalProperties": false,
+          "description": "ContentType middleware - or rather its unique `autoDetect` option - specifies whether to let the `Content-Type` header, if it has not been set by the backend, be automatically set to a value derived from the contents of the response. As a proxy, the default behavior should be to leave the header alone, regardless of what the backend did with it. However, the historic default was to always auto-detect and set the header if it was nil, and it is going to be kept that way in order to support users currently relying on it. This middleware exists to enable the correct behavior until at least the default one can be changed in a future version.",
+          "properties": {
+            "autoDetect": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "digestAuth": {
+          "additionalProperties": false,
+          "description": "DigestAuth holds the Digest HTTP authentication configuration.",
+          "properties": {
+            "headerField": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "realm": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "removeHeader": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "secret": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "errors": {
+          "additionalProperties": false,
+          "description": "ErrorPage holds the custom error page configuration.",
+          "properties": {
+            "query": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "service": {
+              "additionalProperties": false,
+              "description": "Service defines an upstream to proxy traffic.",
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "Service",
+                    "TraefikService"
+                  ],
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "name": {
+                  "description": "Name is a reference to a Kubernetes Service object (for a load-balancer of servers), or to a TraefikService object (service load-balancer, mirroring, etc). The differentiation between the two is specified in the Kind field.",
+                  "type": "string"
+                },
+                "namespace": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "passHostHeader": {
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
+                },
+                "port": {
+                  "x-kubernetes-int-or-string": true
+                },
+                "responseForwarding": {
+                  "additionalProperties": false,
+                  "description": "ResponseForwarding holds configuration for the forward of the response.",
+                  "properties": {
+                    "flushInterval": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "type": [
+                    "object",
+                    "null"
+                  ]
+                },
+                "scheme": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "serversTransport": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "sticky": {
+                  "additionalProperties": false,
+                  "description": "Sticky holds the sticky configuration.",
+                  "properties": {
+                    "cookie": {
+                      "additionalProperties": false,
+                      "description": "Cookie holds the sticky configuration based on cookie.",
+                      "properties": {
+                        "httpOnly": {
+                          "type": [
+                            "boolean",
+                            "null"
+                          ]
+                        },
+                        "name": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "sameSite": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "secure": {
+                          "type": [
+                            "boolean",
+                            "null"
+                          ]
+                        }
+                      },
+                      "type": [
+                        "object",
+                        "null"
+                      ]
+                    }
+                  },
+                  "type": [
+                    "object",
+                    "null"
+                  ]
+                },
+                "strategy": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "weight": {
+                  "description": "Weight should only be specified when Name references a TraefikService object (and to be precise, one that embeds a Weighted Round Robin).",
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "name"
+              ],
+              "type": [
+                "object",
+                "null"
+              ]
+            },
+            "status": {
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "forwardAuth": {
+          "additionalProperties": false,
+          "description": "ForwardAuth holds the http forward authentication configuration.",
+          "properties": {
+            "address": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "authRequestHeaders": {
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            },
+            "authResponseHeaders": {
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            },
+            "authResponseHeadersRegex": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "tls": {
+              "additionalProperties": false,
+              "description": "ClientTLS holds TLS specific configurations as client.",
+              "properties": {
+                "caOptional": {
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
+                },
+                "caSecret": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "certSecret": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "insecureSkipVerify": {
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
+                }
+              },
+              "type": [
+                "object",
+                "null"
+              ]
+            },
+            "trustForwardHeader": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "headers": {
+          "additionalProperties": false,
+          "description": "Headers holds the custom header configuration.",
+          "properties": {
+            "accessControlAllowCredentials": {
+              "description": "AccessControlAllowCredentials is only valid if true. false is ignored.",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "accessControlAllowHeaders": {
+              "description": "AccessControlAllowHeaders must be used in response to a preflight request with Access-Control-Request-Headers set.",
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            },
+            "accessControlAllowMethods": {
+              "description": "AccessControlAllowMethods must be used in response to a preflight request with Access-Control-Request-Method set.",
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            },
+            "accessControlAllowOriginList": {
+              "description": "AccessControlAllowOriginList is a list of allowable origins. Can also be a wildcard origin \"*\".",
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            },
+            "accessControlAllowOriginListRegex": {
+              "description": "AccessControlAllowOriginListRegex is a list of allowable origins written following the Regular Expression syntax (https://golang.org/pkg/regexp/).",
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            },
+            "accessControlExposeHeaders": {
+              "description": "AccessControlExposeHeaders sets valid headers for the response.",
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            },
+            "accessControlMaxAge": {
+              "description": "AccessControlMaxAge sets the time that a preflight request may be cached.",
+              "format": "int64",
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "addVaryHeader": {
+              "description": "AddVaryHeader controls if the Vary header is automatically added/updated when the AccessControlAllowOriginList is set.",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "allowedHosts": {
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            },
+            "browserXssFilter": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "contentSecurityPolicy": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "contentTypeNosniff": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "customBrowserXSSValue": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "customFrameOptionsValue": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "customRequestHeaders": {
+              "additionalProperties": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": [
+                "object",
+                "null"
+              ]
+            },
+            "customResponseHeaders": {
+              "additionalProperties": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": [
+                "object",
+                "null"
+              ]
+            },
+            "featurePolicy": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "forceSTSHeader": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "frameDeny": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "hostsProxyHeaders": {
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            },
+            "isDevelopment": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "publicKey": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "referrerPolicy": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "sslForceHost": {
+              "description": "Deprecated: use RedirectRegex instead.",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "sslHost": {
+              "description": "Deprecated: use RedirectRegex instead.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "sslProxyHeaders": {
+              "additionalProperties": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": [
+                "object",
+                "null"
+              ]
+            },
+            "sslRedirect": {
+              "description": "Deprecated: use EntryPoint redirection or RedirectScheme instead.",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "sslTemporaryRedirect": {
+              "description": "Deprecated: use EntryPoint redirection or RedirectScheme instead.",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "stsIncludeSubdomains": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "stsPreload": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "stsSeconds": {
+              "format": "int64",
+              "type": [
+                "integer",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "inFlightReq": {
+          "additionalProperties": false,
+          "description": "InFlightReq limits the number of requests being processed and served concurrently.",
+          "properties": {
+            "amount": {
+              "format": "int64",
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "sourceCriterion": {
+              "additionalProperties": false,
+              "description": "SourceCriterion defines what criterion is used to group requests as originating from a common source. If none are set, the default is to use the request's remote address field. All fields are mutually exclusive.",
+              "properties": {
+                "ipStrategy": {
+                  "additionalProperties": false,
+                  "description": "IPStrategy holds the ip strategy configuration.",
+                  "properties": {
+                    "depth": {
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
+                    },
+                    "excludedIPs": {
+                      "items": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "type": [
+                        "array",
+                        "null"
+                      ]
+                    }
+                  },
+                  "type": [
+                    "object",
+                    "null"
+                  ]
+                },
+                "requestHeaderName": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "requestHost": {
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
+                }
+              },
+              "type": [
+                "object",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "ipWhiteList": {
+          "additionalProperties": false,
+          "description": "IPWhiteList holds the ip white list configuration.",
+          "properties": {
+            "ipStrategy": {
+              "additionalProperties": false,
+              "description": "IPStrategy holds the ip strategy configuration.",
+              "properties": {
+                "depth": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                },
+                "excludedIPs": {
+                  "items": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "type": [
+                    "array",
+                    "null"
+                  ]
+                }
+              },
+              "type": [
+                "object",
+                "null"
+              ]
+            },
+            "sourceRange": {
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "passTLSClientCert": {
+          "additionalProperties": false,
+          "description": "PassTLSClientCert holds the TLS client cert headers configuration.",
+          "properties": {
+            "info": {
+              "additionalProperties": false,
+              "description": "TLSClientCertificateInfo holds the client TLS certificate info configuration.",
+              "properties": {
+                "issuer": {
+                  "additionalProperties": false,
+                  "description": "TLSCLientCertificateDNInfo holds the client TLS certificate distinguished name info configuration. cf https://tools.ietf.org/html/rfc3739",
+                  "properties": {
+                    "commonName": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    },
+                    "country": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    },
+                    "domainComponent": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    },
+                    "locality": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    },
+                    "organization": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    },
+                    "province": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    },
+                    "serialNumber": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    }
+                  },
+                  "type": [
+                    "object",
+                    "null"
+                  ]
+                },
+                "notAfter": {
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
+                },
+                "notBefore": {
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
+                },
+                "sans": {
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
+                },
+                "serialNumber": {
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
+                },
+                "subject": {
+                  "additionalProperties": false,
+                  "description": "TLSCLientCertificateDNInfo holds the client TLS certificate distinguished name info configuration. cf https://tools.ietf.org/html/rfc3739",
+                  "properties": {
+                    "commonName": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    },
+                    "country": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    },
+                    "domainComponent": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    },
+                    "locality": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    },
+                    "organization": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    },
+                    "province": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    },
+                    "serialNumber": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    }
+                  },
+                  "type": [
+                    "object",
+                    "null"
+                  ]
+                }
+              },
+              "type": [
+                "object",
+                "null"
+              ]
+            },
+            "pem": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "plugin": {
+          "additionalProperties": {
+            "x-kubernetes-preserve-unknown-fields": true
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "rateLimit": {
+          "additionalProperties": false,
+          "description": "RateLimit holds the rate limiting configuration for a given router.",
+          "properties": {
+            "average": {
+              "format": "int64",
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "burst": {
+              "format": "int64",
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "period": {
+              "x-kubernetes-int-or-string": true
+            },
+            "sourceCriterion": {
+              "additionalProperties": false,
+              "description": "SourceCriterion defines what criterion is used to group requests as originating from a common source. If none are set, the default is to use the request's remote address field. All fields are mutually exclusive.",
+              "properties": {
+                "ipStrategy": {
+                  "additionalProperties": false,
+                  "description": "IPStrategy holds the ip strategy configuration.",
+                  "properties": {
+                    "depth": {
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
+                    },
+                    "excludedIPs": {
+                      "items": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "type": [
+                        "array",
+                        "null"
+                      ]
+                    }
+                  },
+                  "type": [
+                    "object",
+                    "null"
+                  ]
+                },
+                "requestHeaderName": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "requestHost": {
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
+                }
+              },
+              "type": [
+                "object",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "redirectRegex": {
+          "additionalProperties": false,
+          "description": "RedirectRegex holds the redirection configuration.",
+          "properties": {
+            "permanent": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "regex": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "replacement": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "redirectScheme": {
+          "additionalProperties": false,
+          "description": "RedirectScheme holds the scheme redirection configuration.",
+          "properties": {
+            "permanent": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "port": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "scheme": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "replacePath": {
+          "additionalProperties": false,
+          "description": "ReplacePath holds the ReplacePath configuration.",
+          "properties": {
+            "path": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "replacePathRegex": {
+          "additionalProperties": false,
+          "description": "ReplacePathRegex holds the ReplacePathRegex configuration.",
+          "properties": {
+            "regex": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "replacement": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "retry": {
+          "additionalProperties": false,
+          "description": "Retry holds the retry configuration.",
+          "properties": {
+            "attempts": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "initialInterval": {
+              "x-kubernetes-int-or-string": true
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "stripPrefix": {
+          "additionalProperties": false,
+          "description": "StripPrefix holds the StripPrefix configuration.",
+          "properties": {
+            "forceSlash": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "prefixes": {
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "stripPrefixRegex": {
+          "additionalProperties": false,
+          "description": "StripPrefixRegex holds the StripPrefixRegex configuration.",
+          "properties": {
+            "regex": {
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        }
+      },
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "metadata",
+    "spec"
+  ],
+  "type": "object",
+  "x-kubernetes-group-version-kind": [
+    {
+      "group": "traefik.containo.us",
+      "kind": "Middleware",
+      "version": "v1alpha1"
+    }
+  ]
+}
