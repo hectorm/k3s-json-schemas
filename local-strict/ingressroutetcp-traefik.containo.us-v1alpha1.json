@@ -1,0 +1,283 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "description": "IngressRouteTCP is an Ingress CRD specification.",
+  "properties": {
+    "apiVersion": {
+      "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "enum": [
+        "traefik.containo.us/v1alpha1"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "kind": {
+      "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "enum": [
+        "IngressRouteTCP"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "metadata": {
+      "$ref": "_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta_v2",
+      "description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
+    },
+    "spec": {
+      "additionalProperties": false,
+      "description": "IngressRouteTCPSpec is a specification for a IngressRouteTCPSpec resource.",
+      "properties": {
+        "entryPoints": {
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "routes": {
+          "items": {
+            "additionalProperties": false,
+            "description": "RouteTCP contains the set of routes.",
+            "properties": {
+              "match": {
+                "type": "string"
+              },
+              "middlewares": {
+                "description": "Middlewares contains references to MiddlewareTCP resources.",
+                "items": {
+                  "additionalProperties": false,
+                  "description": "ObjectReference is a generic reference to a Traefik resource.",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "namespace": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ],
+                  "type": [
+                    "object",
+                    "null"
+                  ]
+                },
+                "type": [
+                  "array",
+                  "null"
+                ]
+              },
+              "services": {
+                "items": {
+                  "additionalProperties": false,
+                  "description": "ServiceTCP defines an upstream to proxy traffic.",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "namespace": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "port": {
+                      "x-kubernetes-int-or-string": true
+                    },
+                    "proxyProtocol": {
+                      "additionalProperties": false,
+                      "description": "ProxyProtocol holds the ProxyProtocol configuration.",
+                      "properties": {
+                        "version": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        }
+                      },
+                      "type": [
+                        "object",
+                        "null"
+                      ]
+                    },
+                    "terminationDelay": {
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
+                    },
+                    "weight": {
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "port"
+                  ],
+                  "type": [
+                    "object",
+                    "null"
+                  ]
+                },
+                "type": [
+                  "array",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "match"
+            ],
+            "type": [
+              "object",
+              "null"
+            ]
+          },
+          "type": "array"
+        },
+        "tls": {
+          "additionalProperties": false,
+          "description": "TLSTCP contains the TLS certificates configuration of the routes. To enable Let's Encrypt, use an empty TLS struct, e.g. in YAML: \n \t tls: {} # inline format \n \t tls: \t   secretName: # block format",
+          "properties": {
+            "certResolver": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "domains": {
+              "items": {
+                "additionalProperties": false,
+                "description": "Domain holds a domain name with SANs.",
+                "properties": {
+                  "main": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sans": {
+                    "items": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "type": [
+                      "array",
+                      "null"
+                    ]
+                  }
+                },
+                "type": [
+                  "object",
+                  "null"
+                ]
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            },
+            "options": {
+              "additionalProperties": false,
+              "description": "Options is a reference to a TLSOption, that specifies the parameters of the TLS connection.",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "namespace": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "name"
+              ],
+              "type": [
+                "object",
+                "null"
+              ]
+            },
+            "passthrough": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "secretName": {
+              "description": "SecretName is the name of the referenced Kubernetes Secret to specify the certificate details.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "store": {
+              "additionalProperties": false,
+              "description": "Store is a reference to a TLSStore, that specifies the parameters of the TLS store.",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "namespace": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "name"
+              ],
+              "type": [
+                "object",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "routes"
+      ],
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "metadata",
+    "spec"
+  ],
+  "type": "object",
+  "x-kubernetes-group-version-kind": [
+    {
+      "group": "traefik.containo.us",
+      "kind": "IngressRouteTCP",
+      "version": "v1alpha1"
+    }
+  ]
+}
