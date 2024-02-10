@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "NodeAddress contains information for the node's address.",
+  "properties": {
+    "address": {
+      "description": "The node address.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "type": {
+      "description": "Node address type, one of Hostname, ExternalIP or InternalIP.\n\n",
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "type",
+    "address"
+  ],
+  "type": "object"
+}
