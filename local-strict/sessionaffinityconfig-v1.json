@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "description": "SessionAffinityConfig represents the configurations of session affinity.",
+  "properties": {
+    "clientIP": {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.ClientIPConfig",
+      "description": "clientIP contains the configurations of Client IP based session affinity."
+    }
+  },
+  "type": "object"
+}
