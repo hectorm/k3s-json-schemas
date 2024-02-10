@@ -1,0 +1,66 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: 'Generate schemas'
+
+on:
+  workflow_call:
+    inputs:
+      k3s-version:
+        type: 'string'
+        required: true
+
+permissions: {}
+
+jobs:
+
+  generate-schemas:
+    name: 'Generate schemas'
+    runs-on: 'ubuntu-latest'
+    permissions:
+      contents: 'read'
+    env:
+      K3S_VERSION: '${{ inputs.k3s-version }}'
+    steps:
+      - name: 'Checkout'
+        uses: 'actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11'
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+      - name: 'Generate schemas'
+        run: |
+          ./scripts/generate-schemas.sh
+      - name: 'Upload schemas artifact'
+        uses: 'actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3'
+        with:
+          name: 'schemas-${{ inputs.k3s-version }}'
+          path: './schemas/'
+          retention-days: 1
+
+  publish-schemas:
+    name: 'Publish schemas'
+    needs: ['generate-schemas']
+    if: >-
+      github.ref_name == github.event.repository.default_branch
+        && contains(fromJSON('["schedule", "workflow_dispatch"]'), github.event_name)
+    runs-on: 'ubuntu-latest'
+    permissions:
+      contents: 'write'
+    env:
+      K3S_VERSION: '${{ inputs.k3s-version }}'
+      GIT_DIR: './git/'
+      GIT_WORK_TREE: './schemas/'
+      GIT_REMOTE: 'https://oauth2:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git'
+    steps:
+      - name: 'Download schemas artifact'
+        uses: 'actions/download-artifact@eaceaf801fd36c7dee90939fad912460b18a1ffe'
+        with:
+          name: 'schemas-${{ inputs.k3s-version }}'
+          path: './schemas/'
+      - name: 'Publish schemas'
+        run: |
+          git config --global user.name '~'
+          git config --global user.email 'noreply@molinero.dev'
+          mkdir "${GIT_DIR:?}" && env -u GIT_WORK_TREE git init --bare
+          git remote add origin "${GIT_REMOTE:?}"
+          git switch --orphan "schemas/${K3S_VERSION:?}"
+          git add --all && git commit --allow-empty-message --message ''
+          git push origin --force "schemas/${K3S_VERSION:?}"

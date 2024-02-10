@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: 'Schemas update trigger'
+
+on:
+  push:
+    paths: ['**']
+  pull_request:
+    branches: ['*']
+  workflow_dispatch:
+    inputs:
+      k3s-version:
+        description: 'K3s version'
+        required: true
+
+permissions: {}
+
+jobs:
+
+  generate-schemas:
+    name: 'Generate schemas for K3s ${{ github.event.inputs.k3s-version }}'
+    uses: './.github/workflows/generate-schemas.yml'
+    permissions:
+      contents: 'write'
+    with:
+      k3s-version: '${{ github.event.inputs.k3s-version }}'
