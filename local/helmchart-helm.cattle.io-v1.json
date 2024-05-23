@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "apiVersion": {
+      "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "enum": [
+        "helm.cattle.io/v1"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "kind": {
+      "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "enum": [
+        "HelmChart"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "metadata": {
+      "$ref": "_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta",
+      "description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
+    },
+    "spec": {
+      "properties": {
+        "authPassCredentials": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "authSecret": {},
+        "backOffLimit": {},
+        "bootstrap": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "chart": {},
+        "chartContent": {},
+        "createNamespace": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "dockerRegistrySecret": {},
+        "failurePolicy": {},
+        "helmVersion": {},
+        "jobImage": {},
+        "podSecurityContext": {},
+        "repo": {},
+        "repoCA": {},
+        "repoCAConfigMap": {},
+        "securityContext": {},
+        "set": {
+          "additionalProperties": {
+            "x-kubernetes-int-or-string": true
+          }
+        },
+        "targetNamespace": {},
+        "timeout": {},
+        "valuesContent": {},
+        "version": {}
+      },
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "status": {
+      "properties": {
+        "jobName": {}
+      },
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  },
+  "type": "object",
+  "x-kubernetes-group-version-kind": [
+    {
+      "group": "helm.cattle.io",
+      "kind": "HelmChart",
+      "version": "v1"
+    }
+  ]
+}
