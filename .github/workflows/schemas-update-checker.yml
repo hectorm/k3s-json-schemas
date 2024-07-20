@@ -1,32 +1,31 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
-name: 'Schemas update checker'
+name: "Schemas update checker"
 
 on:
   push:
-    paths: ['.github/workflows/**']
+    paths: [".github/workflows/**"]
   pull_request:
-    branches: ['*']
+    branches: ["*"]
   schedule:
-    - cron: '50 03 * * *'
+    - cron: "50 03 * * *"
   workflow_dispatch:
 
 permissions: {}
 
 jobs:
-
   check-k3s-versions:
-    name: 'Check K3s versions'
-    runs-on: 'ubuntu-latest'
+    name: "Check K3s versions"
+    runs-on: "ubuntu-latest"
     permissions:
-      contents: 'read'
+      contents: "read"
     outputs:
-      k3s-versions: '${{ steps.k3s-versions.outputs.result }}'
+      k3s-versions: "${{ steps.k3s-versions.outputs.result }}"
     steps:
-      - name: 'Check K3s versions'
-        uses: 'actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea'
-        id: 'k3s-versions'
+      - name: "Check K3s versions"
+        uses: "actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea"
+        id: "k3s-versions"
         with:
-          result-encoding: 'json'
+          result-encoding: "json"
           script: |
             const apiUrl = "https://hub.docker.com/v2/namespaces/rancher/repositories/k3s/tags?page_size=100";
             const fetchTags = async (url, tags = [], limit = 300) => {
@@ -62,18 +61,18 @@ jobs:
             return newVersions;
 
   generate-schemas:
-    name: 'Generate schemas for K3s ${{ matrix.k3s-version }}'
-    uses: './.github/workflows/generate-schemas.yml'
-    needs: ['check-k3s-versions']
+    name: "Generate schemas for K3s ${{ matrix.k3s-version }}"
+    uses: "./.github/workflows/generate-schemas.yml"
+    needs: ["check-k3s-versions"]
     if: >-
       github.ref_name == github.event.repository.default_branch
         && contains(fromJSON('["schedule", "workflow_dispatch"]'), github.event_name)
         && fromJSON(needs.check-k3s-versions.outputs.k3s-versions)[0] != null
     permissions:
-      contents: 'write'
+      contents: "write"
     strategy:
       fail-fast: false
       matrix:
-        k3s-version: '${{ fromJSON(needs.check-k3s-versions.outputs.k3s-versions) }}'
+        k3s-version: "${{ fromJSON(needs.check-k3s-versions.outputs.k3s-versions) }}"
     with:
-      k3s-version: '${{ matrix.k3s-version }}'
+      k3s-version: "${{ matrix.k3s-version }}"
