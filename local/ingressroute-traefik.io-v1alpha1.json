@@ -1,0 +1,387 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "IngressRoute is the CRD implementation of a Traefik HTTP Router.",
+  "properties": {
+    "apiVersion": {
+      "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "enum": [
+        "traefik.io/v1alpha1"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "kind": {
+      "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "enum": [
+        "IngressRoute"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "metadata": {
+      "$ref": "_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta",
+      "description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
+    },
+    "spec": {
+      "description": "IngressRouteSpec defines the desired state of IngressRoute.",
+      "properties": {
+        "entryPoints": {
+          "description": "EntryPoints defines the list of entry point names to bind to.\nEntry points have to be configured in the static configuration.\nMore info: https://doc.traefik.io/traefik/v2.11/routing/entrypoints/\nDefault: all.",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "routes": {
+          "description": "Routes defines the list of routes.",
+          "items": {
+            "description": "Route holds the HTTP route configuration.",
+            "properties": {
+              "kind": {
+                "description": "Kind defines the kind of the route.\nRule is the only supported kind.",
+                "enum": [
+                  "Rule"
+                ],
+                "type": "string"
+              },
+              "match": {
+                "description": "Match defines the router's rule.\nMore info: https://doc.traefik.io/traefik/v2.11/routing/routers/#rule",
+                "type": "string"
+              },
+              "middlewares": {
+                "description": "Middlewares defines the list of references to Middleware resources.\nMore info: https://doc.traefik.io/traefik/v2.11/routing/providers/kubernetes-crd/#kind-middleware",
+                "items": {
+                  "description": "MiddlewareRef is a reference to a Middleware resource.",
+                  "properties": {
+                    "name": {
+                      "description": "Name defines the name of the referenced Middleware resource.",
+                      "type": "string"
+                    },
+                    "namespace": {
+                      "description": "Namespace defines the namespace of the referenced Middleware resource.",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ],
+                  "type": [
+                    "object",
+                    "null"
+                  ]
+                },
+                "type": [
+                  "array",
+                  "null"
+                ]
+              },
+              "priority": {
+                "description": "Priority defines the router's priority.\nMore info: https://doc.traefik.io/traefik/v2.11/routing/routers/#priority",
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              },
+              "services": {
+                "description": "Services defines the list of Service.\nIt can contain any combination of TraefikService and/or reference to a Kubernetes Service.",
+                "items": {
+                  "description": "Service defines an upstream HTTP service to proxy traffic to.",
+                  "properties": {
+                    "kind": {
+                      "description": "Kind defines the kind of the Service.",
+                      "enum": [
+                        "Service",
+                        "TraefikService"
+                      ],
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "name": {
+                      "description": "Name defines the name of the referenced Kubernetes Service or TraefikService.\nThe differentiation between the two is specified in the Kind field.",
+                      "type": "string"
+                    },
+                    "namespace": {
+                      "description": "Namespace defines the namespace of the referenced Kubernetes Service or TraefikService.",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "nativeLB": {
+                      "description": "NativeLB controls, when creating the load-balancer,\nwhether the LB's children are directly the pods IPs or if the only child is the Kubernetes Service clusterIP.\nThe Kubernetes Service itself does load-balance to the pods.\nBy default, NativeLB is false.",
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    },
+                    "passHostHeader": {
+                      "description": "PassHostHeader defines whether the client Host header is forwarded to the upstream Kubernetes Service.\nBy default, passHostHeader is true.",
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    },
+                    "port": {
+                      "description": "Port defines the port of a Kubernetes Service.\nThis can be a reference to a named port.",
+                      "x-kubernetes-int-or-string": true
+                    },
+                    "responseForwarding": {
+                      "description": "ResponseForwarding defines how Traefik forwards the response from the upstream Kubernetes Service to the client.",
+                      "properties": {
+                        "flushInterval": {
+                          "description": "FlushInterval defines the interval, in milliseconds, in between flushes to the client while copying the response body.\nA negative value means to flush immediately after each write to the client.\nThis configuration is ignored when ReverseProxy recognizes a response as a streaming response;\nfor such responses, writes are flushed to the client immediately.\nDefault: 100ms",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "type": [
+                        "object",
+                        "null"
+                      ]
+                    },
+                    "scheme": {
+                      "description": "Scheme defines the scheme to use for the request to the upstream Kubernetes Service.\nIt defaults to https when Kubernetes Service port is 443, http otherwise.",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "serversTransport": {
+                      "description": "ServersTransport defines the name of ServersTransport resource to use.\nIt allows to configure the transport between Traefik and your servers.\nCan only be used on a Kubernetes Service.",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "sticky": {
+                      "description": "Sticky defines the sticky sessions configuration.\nMore info: https://doc.traefik.io/traefik/v2.11/routing/services/#sticky-sessions",
+                      "properties": {
+                        "cookie": {
+                          "description": "Cookie defines the sticky cookie configuration.",
+                          "properties": {
+                            "httpOnly": {
+                              "description": "HTTPOnly defines whether the cookie can be accessed by client-side APIs, such as JavaScript.",
+                              "type": [
+                                "boolean",
+                                "null"
+                              ]
+                            },
+                            "name": {
+                              "description": "Name defines the Cookie name.",
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "sameSite": {
+                              "description": "SameSite defines the same site policy.\nMore info: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite",
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "secure": {
+                              "description": "Secure defines whether the cookie can only be transmitted over an encrypted connection (i.e. HTTPS).",
+                              "type": [
+                                "boolean",
+                                "null"
+                              ]
+                            }
+                          },
+                          "type": [
+                            "object",
+                            "null"
+                          ]
+                        }
+                      },
+                      "type": [
+                        "object",
+                        "null"
+                      ]
+                    },
+                    "strategy": {
+                      "description": "Strategy defines the load balancing strategy between the servers.\nRoundRobin is the only supported value at the moment.",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "weight": {
+                      "description": "Weight defines the weight and should only be specified when Name references a TraefikService object\n(and to be precise, one that embeds a Weighted Round Robin).",
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ],
+                  "type": [
+                    "object",
+                    "null"
+                  ]
+                },
+                "type": [
+                  "array",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "kind",
+              "match"
+            ],
+            "type": [
+              "object",
+              "null"
+            ]
+          },
+          "type": "array"
+        },
+        "tls": {
+          "description": "TLS defines the TLS configuration.\nMore info: https://doc.traefik.io/traefik/v2.11/routing/routers/#tls",
+          "properties": {
+            "certResolver": {
+              "description": "CertResolver defines the name of the certificate resolver to use.\nCert resolvers have to be configured in the static configuration.\nMore info: https://doc.traefik.io/traefik/v2.11/https/acme/#certificate-resolvers",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "domains": {
+              "description": "Domains defines the list of domains that will be used to issue certificates.\nMore info: https://doc.traefik.io/traefik/v2.11/routing/routers/#domains",
+              "items": {
+                "description": "Domain holds a domain name with SANs.",
+                "properties": {
+                  "main": {
+                    "description": "Main defines the main domain name.",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sans": {
+                    "description": "SANs defines the subject alternative domain names.",
+                    "items": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "type": [
+                      "array",
+                      "null"
+                    ]
+                  }
+                },
+                "type": [
+                  "object",
+                  "null"
+                ]
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            },
+            "options": {
+              "description": "Options defines the reference to a TLSOption, that specifies the parameters of the TLS connection.\nIf not defined, the `default` TLSOption is used.\nMore info: https://doc.traefik.io/traefik/v2.11/https/tls/#tls-options",
+              "properties": {
+                "name": {
+                  "description": "Name defines the name of the referenced TLSOption.\nMore info: https://doc.traefik.io/traefik/v2.11/routing/providers/kubernetes-crd/#kind-tlsoption",
+                  "type": "string"
+                },
+                "namespace": {
+                  "description": "Namespace defines the namespace of the referenced TLSOption.\nMore info: https://doc.traefik.io/traefik/v2.11/routing/providers/kubernetes-crd/#kind-tlsoption",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "name"
+              ],
+              "type": [
+                "object",
+                "null"
+              ]
+            },
+            "secretName": {
+              "description": "SecretName is the name of the referenced Kubernetes Secret to specify the certificate details.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "store": {
+              "description": "Store defines the reference to the TLSStore, that will be used to store certificates.\nPlease note that only `default` TLSStore can be used.",
+              "properties": {
+                "name": {
+                  "description": "Name defines the name of the referenced TLSStore.\nMore info: https://doc.traefik.io/traefik/v2.11/routing/providers/kubernetes-crd/#kind-tlsstore",
+                  "type": "string"
+                },
+                "namespace": {
+                  "description": "Namespace defines the namespace of the referenced TLSStore.\nMore info: https://doc.traefik.io/traefik/v2.11/routing/providers/kubernetes-crd/#kind-tlsstore",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "name"
+              ],
+              "type": [
+                "object",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "routes"
+      ],
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "metadata",
+    "spec"
+  ],
+  "type": "object",
+  "x-kubernetes-group-version-kind": [
+    {
+      "group": "traefik.io",
+      "kind": "IngressRoute",
+      "version": "v1alpha1"
+    }
+  ],
+  "x-kubernetes-selectable-fields": []
+}
