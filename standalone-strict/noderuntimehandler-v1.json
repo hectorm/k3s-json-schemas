@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "description": "NodeRuntimeHandler is a set of runtime handler information.",
+  "properties": {
+    "features": {
+      "additionalProperties": false,
+      "description": "NodeRuntimeHandlerFeatures is a set of runtime features.",
+      "properties": {
+        "recursiveReadOnlyMounts": {
+          "description": "RecursiveReadOnlyMounts is set to true if the runtime handler supports RecursiveReadOnlyMounts.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "name": {
+      "description": "Runtime handler name. Empty for the default runtime handler.",
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "type": "object"
+}
