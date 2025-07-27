@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "description": "NodeSwapStatus represents swap memory information.",
+  "properties": {
+    "capacity": {
+      "description": "Total amount of swap memory in bytes.",
+      "format": "int64",
+      "type": [
+        "integer",
+        "null"
+      ]
+    }
+  },
+  "type": "object"
+}
