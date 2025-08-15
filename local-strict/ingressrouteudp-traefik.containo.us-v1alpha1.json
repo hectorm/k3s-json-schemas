@@ -1,0 +1,133 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "description": "IngressRouteUDP is a CRD implementation of a Traefik UDP Router.",
+  "properties": {
+    "apiVersion": {
+      "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "enum": [
+        "traefik.containo.us/v1alpha1"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "kind": {
+      "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "enum": [
+        "IngressRouteUDP"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "metadata": {
+      "$ref": "_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta",
+      "description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
+    },
+    "spec": {
+      "additionalProperties": false,
+      "description": "IngressRouteUDPSpec defines the desired state of a IngressRouteUDP.",
+      "properties": {
+        "entryPoints": {
+          "description": "EntryPoints defines the list of entry point names to bind to.\nEntry points have to be configured in the static configuration.\nMore info: https://doc.traefik.io/traefik/v2.11/routing/entrypoints/\nDefault: all.",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "routes": {
+          "description": "Routes defines the list of routes.",
+          "items": {
+            "additionalProperties": false,
+            "description": "RouteUDP holds the UDP route configuration.",
+            "properties": {
+              "services": {
+                "description": "Services defines the list of UDP services.",
+                "items": {
+                  "additionalProperties": false,
+                  "description": "ServiceUDP defines an upstream UDP service to proxy traffic to.",
+                  "properties": {
+                    "name": {
+                      "description": "Name defines the name of the referenced Kubernetes Service.",
+                      "type": "string"
+                    },
+                    "namespace": {
+                      "description": "Namespace defines the namespace of the referenced Kubernetes Service.",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "nativeLB": {
+                      "description": "NativeLB controls, when creating the load-balancer,\nwhether the LB's children are directly the pods IPs or if the only child is the Kubernetes Service clusterIP.\nThe Kubernetes Service itself does load-balance to the pods.\nBy default, NativeLB is false.",
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    },
+                    "port": {
+                      "description": "Port defines the port of a Kubernetes Service.\nThis can be a reference to a named port.",
+                      "x-kubernetes-int-or-string": true
+                    },
+                    "weight": {
+                      "description": "Weight defines the weight used when balancing requests between multiple Kubernetes Service.",
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "port"
+                  ],
+                  "type": [
+                    "object",
+                    "null"
+                  ]
+                },
+                "type": [
+                  "array",
+                  "null"
+                ]
+              }
+            },
+            "type": [
+              "object",
+              "null"
+            ]
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "routes"
+      ],
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "metadata",
+    "spec"
+  ],
+  "type": "object",
+  "x-kubernetes-group-version-kind": [
+    {
+      "group": "traefik.containo.us",
+      "kind": "IngressRouteUDP",
+      "version": "v1alpha1"
+    }
+  ]
+}
