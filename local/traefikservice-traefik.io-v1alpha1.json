@@ -1,0 +1,903 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "TraefikService is the CRD implementation of a Traefik Service.\nTraefikService object allows to:\n- Apply weight to Services on load-balancing\n- Mirror traffic on services\nMore info: https://doc.traefik.io/traefik/v3.3/routing/providers/kubernetes-crd/#kind-traefikservice",
+  "properties": {
+    "apiVersion": {
+      "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "enum": [
+        "traefik.io/v1alpha1"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "kind": {
+      "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "enum": [
+        "TraefikService"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "metadata": {
+      "$ref": "_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta",
+      "description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
+    },
+    "spec": {
+      "description": "TraefikServiceSpec defines the desired state of a TraefikService.",
+      "properties": {
+        "mirroring": {
+          "description": "Mirroring defines the Mirroring service configuration.",
+          "properties": {
+            "healthCheck": {
+              "description": "Healthcheck defines health checks for ExternalName services.",
+              "properties": {
+                "followRedirects": {
+                  "description": "FollowRedirects defines whether redirects should be followed during the health check calls.\nDefault: true",
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
+                },
+                "headers": {
+                  "additionalProperties": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "description": "Headers defines custom headers to be sent to the health check endpoint.",
+                  "type": [
+                    "object",
+                    "null"
+                  ]
+                },
+                "hostname": {
+                  "description": "Hostname defines the value of hostname in the Host header of the health check request.",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "interval": {
+                  "description": "Interval defines the frequency of the health check calls.\nDefault: 30s",
+                  "x-kubernetes-int-or-string": true
+                },
+                "method": {
+                  "description": "Method defines the healthcheck method.",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "mode": {
+                  "description": "Mode defines the health check mode.\nIf defined to grpc, will use the gRPC health check protocol to probe the server.\nDefault: http",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "path": {
+                  "description": "Path defines the server URL path for the health check endpoint.",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "port": {
+                  "description": "Port defines the server URL port for the health check endpoint.",
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                },
+                "scheme": {
+                  "description": "Scheme replaces the server URL scheme for the health check endpoint.",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "status": {
+                  "description": "Status defines the expected HTTP status code of the response to the health check request.",
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                },
+                "timeout": {
+                  "description": "Timeout defines the maximum duration Traefik will wait for a health check request before considering the server unhealthy.\nDefault: 5s",
+                  "x-kubernetes-int-or-string": true
+                }
+              },
+              "type": [
+                "object",
+                "null"
+              ]
+            },
+            "kind": {
+              "description": "Kind defines the kind of the Service.",
+              "enum": [
+                "Service",
+                "TraefikService"
+              ],
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "maxBodySize": {
+              "description": "MaxBodySize defines the maximum size allowed for the body of the request.\nIf the body is larger, the request is not mirrored.\nDefault value is -1, which means unlimited size.",
+              "format": "int64",
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "mirrorBody": {
+              "description": "MirrorBody defines whether the body of the request should be mirrored.\nDefault value is true.",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "mirrors": {
+              "description": "Mirrors defines the list of mirrors where Traefik will duplicate the traffic.",
+              "items": {
+                "description": "MirrorService holds the mirror configuration.",
+                "properties": {
+                  "healthCheck": {
+                    "description": "Healthcheck defines health checks for ExternalName services.",
+                    "properties": {
+                      "followRedirects": {
+                        "description": "FollowRedirects defines whether redirects should be followed during the health check calls.\nDefault: true",
+                        "type": [
+                          "boolean",
+                          "null"
+                        ]
+                      },
+                      "headers": {
+                        "additionalProperties": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "description": "Headers defines custom headers to be sent to the health check endpoint.",
+                        "type": [
+                          "object",
+                          "null"
+                        ]
+                      },
+                      "hostname": {
+                        "description": "Hostname defines the value of hostname in the Host header of the health check request.",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "interval": {
+                        "description": "Interval defines the frequency of the health check calls.\nDefault: 30s",
+                        "x-kubernetes-int-or-string": true
+                      },
+                      "method": {
+                        "description": "Method defines the healthcheck method.",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "mode": {
+                        "description": "Mode defines the health check mode.\nIf defined to grpc, will use the gRPC health check protocol to probe the server.\nDefault: http",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "path": {
+                        "description": "Path defines the server URL path for the health check endpoint.",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "port": {
+                        "description": "Port defines the server URL port for the health check endpoint.",
+                        "type": [
+                          "integer",
+                          "null"
+                        ]
+                      },
+                      "scheme": {
+                        "description": "Scheme replaces the server URL scheme for the health check endpoint.",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "status": {
+                        "description": "Status defines the expected HTTP status code of the response to the health check request.",
+                        "type": [
+                          "integer",
+                          "null"
+                        ]
+                      },
+                      "timeout": {
+                        "description": "Timeout defines the maximum duration Traefik will wait for a health check request before considering the server unhealthy.\nDefault: 5s",
+                        "x-kubernetes-int-or-string": true
+                      }
+                    },
+                    "type": [
+                      "object",
+                      "null"
+                    ]
+                  },
+                  "kind": {
+                    "description": "Kind defines the kind of the Service.",
+                    "enum": [
+                      "Service",
+                      "TraefikService"
+                    ],
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "name": {
+                    "description": "Name defines the name of the referenced Kubernetes Service or TraefikService.\nThe differentiation between the two is specified in the Kind field.",
+                    "type": "string"
+                  },
+                  "namespace": {
+                    "description": "Namespace defines the namespace of the referenced Kubernetes Service or TraefikService.",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "nativeLB": {
+                    "description": "NativeLB controls, when creating the load-balancer,\nwhether the LB's children are directly the pods IPs or if the only child is the Kubernetes Service clusterIP.\nThe Kubernetes Service itself does load-balance to the pods.\nBy default, NativeLB is false.",
+                    "type": [
+                      "boolean",
+                      "null"
+                    ]
+                  },
+                  "nodePortLB": {
+                    "description": "NodePortLB controls, when creating the load-balancer,\nwhether the LB's children are directly the nodes internal IPs using the nodePort when the service type is NodePort.\nIt allows services to be reachable when Traefik runs externally from the Kubernetes cluster but within the same network of the nodes.\nBy default, NodePortLB is false.",
+                    "type": [
+                      "boolean",
+                      "null"
+                    ]
+                  },
+                  "passHostHeader": {
+                    "description": "PassHostHeader defines whether the client Host header is forwarded to the upstream Kubernetes Service.\nBy default, passHostHeader is true.",
+                    "type": [
+                      "boolean",
+                      "null"
+                    ]
+                  },
+                  "percent": {
+                    "description": "Percent defines the part of the traffic to mirror.\nSupported values: 0 to 100.",
+                    "type": [
+                      "integer",
+                      "null"
+                    ]
+                  },
+                  "port": {
+                    "description": "Port defines the port of a Kubernetes Service.\nThis can be a reference to a named port.",
+                    "x-kubernetes-int-or-string": true
+                  },
+                  "responseForwarding": {
+                    "description": "ResponseForwarding defines how Traefik forwards the response from the upstream Kubernetes Service to the client.",
+                    "properties": {
+                      "flushInterval": {
+                        "description": "FlushInterval defines the interval, in milliseconds, in between flushes to the client while copying the response body.\nA negative value means to flush immediately after each write to the client.\nThis configuration is ignored when ReverseProxy recognizes a response as a streaming response;\nfor such responses, writes are flushed to the client immediately.\nDefault: 100ms",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    },
+                    "type": [
+                      "object",
+                      "null"
+                    ]
+                  },
+                  "scheme": {
+                    "description": "Scheme defines the scheme to use for the request to the upstream Kubernetes Service.\nIt defaults to https when Kubernetes Service port is 443, http otherwise.",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "serversTransport": {
+                    "description": "ServersTransport defines the name of ServersTransport resource to use.\nIt allows to configure the transport between Traefik and your servers.\nCan only be used on a Kubernetes Service.",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sticky": {
+                    "description": "Sticky defines the sticky sessions configuration.\nMore info: https://doc.traefik.io/traefik/v3.3/routing/services/#sticky-sessions",
+                    "properties": {
+                      "cookie": {
+                        "description": "Cookie defines the sticky cookie configuration.",
+                        "properties": {
+                          "httpOnly": {
+                            "description": "HTTPOnly defines whether the cookie can be accessed by client-side APIs, such as JavaScript.",
+                            "type": [
+                              "boolean",
+                              "null"
+                            ]
+                          },
+                          "maxAge": {
+                            "description": "MaxAge defines the number of seconds until the cookie expires.\nWhen set to a negative number, the cookie expires immediately.\nWhen set to zero, the cookie never expires.",
+                            "type": [
+                              "integer",
+                              "null"
+                            ]
+                          },
+                          "name": {
+                            "description": "Name defines the Cookie name.",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "path": {
+                            "description": "Path defines the path that must exist in the requested URL for the browser to send the Cookie header.\nWhen not provided the cookie will be sent on every request to the domain.\nMore info: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#pathpath-value",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "sameSite": {
+                            "description": "SameSite defines the same site policy.\nMore info: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "secure": {
+                            "description": "Secure defines whether the cookie can only be transmitted over an encrypted connection (i.e. HTTPS).",
+                            "type": [
+                              "boolean",
+                              "null"
+                            ]
+                          }
+                        },
+                        "type": [
+                          "object",
+                          "null"
+                        ]
+                      }
+                    },
+                    "type": [
+                      "object",
+                      "null"
+                    ]
+                  },
+                  "strategy": {
+                    "description": "Strategy defines the load balancing strategy between the servers.\nRoundRobin is the only supported value at the moment.",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "weight": {
+                    "description": "Weight defines the weight and should only be specified when Name references a TraefikService object\n(and to be precise, one that embeds a Weighted Round Robin).",
+                    "type": [
+                      "integer",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "name"
+                ],
+                "type": [
+                  "object",
+                  "null"
+                ]
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            },
+            "name": {
+              "description": "Name defines the name of the referenced Kubernetes Service or TraefikService.\nThe differentiation between the two is specified in the Kind field.",
+              "type": "string"
+            },
+            "namespace": {
+              "description": "Namespace defines the namespace of the referenced Kubernetes Service or TraefikService.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "nativeLB": {
+              "description": "NativeLB controls, when creating the load-balancer,\nwhether the LB's children are directly the pods IPs or if the only child is the Kubernetes Service clusterIP.\nThe Kubernetes Service itself does load-balance to the pods.\nBy default, NativeLB is false.",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "nodePortLB": {
+              "description": "NodePortLB controls, when creating the load-balancer,\nwhether the LB's children are directly the nodes internal IPs using the nodePort when the service type is NodePort.\nIt allows services to be reachable when Traefik runs externally from the Kubernetes cluster but within the same network of the nodes.\nBy default, NodePortLB is false.",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "passHostHeader": {
+              "description": "PassHostHeader defines whether the client Host header is forwarded to the upstream Kubernetes Service.\nBy default, passHostHeader is true.",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "port": {
+              "description": "Port defines the port of a Kubernetes Service.\nThis can be a reference to a named port.",
+              "x-kubernetes-int-or-string": true
+            },
+            "responseForwarding": {
+              "description": "ResponseForwarding defines how Traefik forwards the response from the upstream Kubernetes Service to the client.",
+              "properties": {
+                "flushInterval": {
+                  "description": "FlushInterval defines the interval, in milliseconds, in between flushes to the client while copying the response body.\nA negative value means to flush immediately after each write to the client.\nThis configuration is ignored when ReverseProxy recognizes a response as a streaming response;\nfor such responses, writes are flushed to the client immediately.\nDefault: 100ms",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "type": [
+                "object",
+                "null"
+              ]
+            },
+            "scheme": {
+              "description": "Scheme defines the scheme to use for the request to the upstream Kubernetes Service.\nIt defaults to https when Kubernetes Service port is 443, http otherwise.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "serversTransport": {
+              "description": "ServersTransport defines the name of ServersTransport resource to use.\nIt allows to configure the transport between Traefik and your servers.\nCan only be used on a Kubernetes Service.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "sticky": {
+              "description": "Sticky defines the sticky sessions configuration.\nMore info: https://doc.traefik.io/traefik/v3.3/routing/services/#sticky-sessions",
+              "properties": {
+                "cookie": {
+                  "description": "Cookie defines the sticky cookie configuration.",
+                  "properties": {
+                    "httpOnly": {
+                      "description": "HTTPOnly defines whether the cookie can be accessed by client-side APIs, such as JavaScript.",
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    },
+                    "maxAge": {
+                      "description": "MaxAge defines the number of seconds until the cookie expires.\nWhen set to a negative number, the cookie expires immediately.\nWhen set to zero, the cookie never expires.",
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
+                    },
+                    "name": {
+                      "description": "Name defines the Cookie name.",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "path": {
+                      "description": "Path defines the path that must exist in the requested URL for the browser to send the Cookie header.\nWhen not provided the cookie will be sent on every request to the domain.\nMore info: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#pathpath-value",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "sameSite": {
+                      "description": "SameSite defines the same site policy.\nMore info: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "secure": {
+                      "description": "Secure defines whether the cookie can only be transmitted over an encrypted connection (i.e. HTTPS).",
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    }
+                  },
+                  "type": [
+                    "object",
+                    "null"
+                  ]
+                }
+              },
+              "type": [
+                "object",
+                "null"
+              ]
+            },
+            "strategy": {
+              "description": "Strategy defines the load balancing strategy between the servers.\nRoundRobin is the only supported value at the moment.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "weight": {
+              "description": "Weight defines the weight and should only be specified when Name references a TraefikService object\n(and to be precise, one that embeds a Weighted Round Robin).",
+              "type": [
+                "integer",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "weighted": {
+          "description": "Weighted defines the Weighted Round Robin configuration.",
+          "properties": {
+            "services": {
+              "description": "Services defines the list of Kubernetes Service and/or TraefikService to load-balance, with weight.",
+              "items": {
+                "description": "Service defines an upstream HTTP service to proxy traffic to.",
+                "properties": {
+                  "healthCheck": {
+                    "description": "Healthcheck defines health checks for ExternalName services.",
+                    "properties": {
+                      "followRedirects": {
+                        "description": "FollowRedirects defines whether redirects should be followed during the health check calls.\nDefault: true",
+                        "type": [
+                          "boolean",
+                          "null"
+                        ]
+                      },
+                      "headers": {
+                        "additionalProperties": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "description": "Headers defines custom headers to be sent to the health check endpoint.",
+                        "type": [
+                          "object",
+                          "null"
+                        ]
+                      },
+                      "hostname": {
+                        "description": "Hostname defines the value of hostname in the Host header of the health check request.",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "interval": {
+                        "description": "Interval defines the frequency of the health check calls.\nDefault: 30s",
+                        "x-kubernetes-int-or-string": true
+                      },
+                      "method": {
+                        "description": "Method defines the healthcheck method.",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "mode": {
+                        "description": "Mode defines the health check mode.\nIf defined to grpc, will use the gRPC health check protocol to probe the server.\nDefault: http",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "path": {
+                        "description": "Path defines the server URL path for the health check endpoint.",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "port": {
+                        "description": "Port defines the server URL port for the health check endpoint.",
+                        "type": [
+                          "integer",
+                          "null"
+                        ]
+                      },
+                      "scheme": {
+                        "description": "Scheme replaces the server URL scheme for the health check endpoint.",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "status": {
+                        "description": "Status defines the expected HTTP status code of the response to the health check request.",
+                        "type": [
+                          "integer",
+                          "null"
+                        ]
+                      },
+                      "timeout": {
+                        "description": "Timeout defines the maximum duration Traefik will wait for a health check request before considering the server unhealthy.\nDefault: 5s",
+                        "x-kubernetes-int-or-string": true
+                      }
+                    },
+                    "type": [
+                      "object",
+                      "null"
+                    ]
+                  },
+                  "kind": {
+                    "description": "Kind defines the kind of the Service.",
+                    "enum": [
+                      "Service",
+                      "TraefikService"
+                    ],
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "name": {
+                    "description": "Name defines the name of the referenced Kubernetes Service or TraefikService.\nThe differentiation between the two is specified in the Kind field.",
+                    "type": "string"
+                  },
+                  "namespace": {
+                    "description": "Namespace defines the namespace of the referenced Kubernetes Service or TraefikService.",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "nativeLB": {
+                    "description": "NativeLB controls, when creating the load-balancer,\nwhether the LB's children are directly the pods IPs or if the only child is the Kubernetes Service clusterIP.\nThe Kubernetes Service itself does load-balance to the pods.\nBy default, NativeLB is false.",
+                    "type": [
+                      "boolean",
+                      "null"
+                    ]
+                  },
+                  "nodePortLB": {
+                    "description": "NodePortLB controls, when creating the load-balancer,\nwhether the LB's children are directly the nodes internal IPs using the nodePort when the service type is NodePort.\nIt allows services to be reachable when Traefik runs externally from the Kubernetes cluster but within the same network of the nodes.\nBy default, NodePortLB is false.",
+                    "type": [
+                      "boolean",
+                      "null"
+                    ]
+                  },
+                  "passHostHeader": {
+                    "description": "PassHostHeader defines whether the client Host header is forwarded to the upstream Kubernetes Service.\nBy default, passHostHeader is true.",
+                    "type": [
+                      "boolean",
+                      "null"
+                    ]
+                  },
+                  "port": {
+                    "description": "Port defines the port of a Kubernetes Service.\nThis can be a reference to a named port.",
+                    "x-kubernetes-int-or-string": true
+                  },
+                  "responseForwarding": {
+                    "description": "ResponseForwarding defines how Traefik forwards the response from the upstream Kubernetes Service to the client.",
+                    "properties": {
+                      "flushInterval": {
+                        "description": "FlushInterval defines the interval, in milliseconds, in between flushes to the client while copying the response body.\nA negative value means to flush immediately after each write to the client.\nThis configuration is ignored when ReverseProxy recognizes a response as a streaming response;\nfor such responses, writes are flushed to the client immediately.\nDefault: 100ms",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    },
+                    "type": [
+                      "object",
+                      "null"
+                    ]
+                  },
+                  "scheme": {
+                    "description": "Scheme defines the scheme to use for the request to the upstream Kubernetes Service.\nIt defaults to https when Kubernetes Service port is 443, http otherwise.",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "serversTransport": {
+                    "description": "ServersTransport defines the name of ServersTransport resource to use.\nIt allows to configure the transport between Traefik and your servers.\nCan only be used on a Kubernetes Service.",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sticky": {
+                    "description": "Sticky defines the sticky sessions configuration.\nMore info: https://doc.traefik.io/traefik/v3.3/routing/services/#sticky-sessions",
+                    "properties": {
+                      "cookie": {
+                        "description": "Cookie defines the sticky cookie configuration.",
+                        "properties": {
+                          "httpOnly": {
+                            "description": "HTTPOnly defines whether the cookie can be accessed by client-side APIs, such as JavaScript.",
+                            "type": [
+                              "boolean",
+                              "null"
+                            ]
+                          },
+                          "maxAge": {
+                            "description": "MaxAge defines the number of seconds until the cookie expires.\nWhen set to a negative number, the cookie expires immediately.\nWhen set to zero, the cookie never expires.",
+                            "type": [
+                              "integer",
+                              "null"
+                            ]
+                          },
+                          "name": {
+                            "description": "Name defines the Cookie name.",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "path": {
+                            "description": "Path defines the path that must exist in the requested URL for the browser to send the Cookie header.\nWhen not provided the cookie will be sent on every request to the domain.\nMore info: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#pathpath-value",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "sameSite": {
+                            "description": "SameSite defines the same site policy.\nMore info: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "secure": {
+                            "description": "Secure defines whether the cookie can only be transmitted over an encrypted connection (i.e. HTTPS).",
+                            "type": [
+                              "boolean",
+                              "null"
+                            ]
+                          }
+                        },
+                        "type": [
+                          "object",
+                          "null"
+                        ]
+                      }
+                    },
+                    "type": [
+                      "object",
+                      "null"
+                    ]
+                  },
+                  "strategy": {
+                    "description": "Strategy defines the load balancing strategy between the servers.\nRoundRobin is the only supported value at the moment.",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "weight": {
+                    "description": "Weight defines the weight and should only be specified when Name references a TraefikService object\n(and to be precise, one that embeds a Weighted Round Robin).",
+                    "type": [
+                      "integer",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "name"
+                ],
+                "type": [
+                  "object",
+                  "null"
+                ]
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            },
+            "sticky": {
+              "description": "Sticky defines whether sticky sessions are enabled.\nMore info: https://doc.traefik.io/traefik/v3.3/routing/providers/kubernetes-crd/#stickiness-and-load-balancing",
+              "properties": {
+                "cookie": {
+                  "description": "Cookie defines the sticky cookie configuration.",
+                  "properties": {
+                    "httpOnly": {
+                      "description": "HTTPOnly defines whether the cookie can be accessed by client-side APIs, such as JavaScript.",
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    },
+                    "maxAge": {
+                      "description": "MaxAge defines the number of seconds until the cookie expires.\nWhen set to a negative number, the cookie expires immediately.\nWhen set to zero, the cookie never expires.",
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
+                    },
+                    "name": {
+                      "description": "Name defines the Cookie name.",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "path": {
+                      "description": "Path defines the path that must exist in the requested URL for the browser to send the Cookie header.\nWhen not provided the cookie will be sent on every request to the domain.\nMore info: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#pathpath-value",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "sameSite": {
+                      "description": "SameSite defines the same site policy.\nMore info: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "secure": {
+                      "description": "Secure defines whether the cookie can only be transmitted over an encrypted connection (i.e. HTTPS).",
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    }
+                  },
+                  "type": [
+                    "object",
+                    "null"
+                  ]
+                }
+              },
+              "type": [
+                "object",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        }
+      },
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "metadata",
+    "spec"
+  ],
+  "type": "object",
+  "x-kubernetes-group-version-kind": [
+    {
+      "group": "traefik.io",
+      "kind": "TraefikService",
+      "version": "v1alpha1"
+    }
+  ]
+}
