@@ -1,0 +1,307 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "description": "API defines an HTTP interface that is exposed to external clients. It specifies the supported versions\nand provides instructions for accessing its documentation. Once instantiated, an API object is associated\nwith an Ingress, IngressRoute, or HTTPRoute resource, enabling the exposure of the described API to the outside world.",
+  "properties": {
+    "apiVersion": {
+      "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "enum": [
+        "hub.traefik.io/v1alpha1"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "kind": {
+      "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "enum": [
+        "API"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "metadata": {
+      "$ref": "_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta",
+      "description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
+    },
+    "spec": {
+      "additionalProperties": false,
+      "description": "APISpec describes the API.",
+      "properties": {
+        "openApiSpec": {
+          "additionalProperties": false,
+          "description": "OpenAPISpec defines the API contract as an OpenAPI specification.",
+          "properties": {
+            "operationSets": {
+              "description": "OperationSets defines the sets of operations to be referenced for granular filtering in APIAccesses.",
+              "items": {
+                "additionalProperties": false,
+                "description": "OperationSet gives a name to a set of matching OpenAPI operations.\nThis set of operations can then be referenced for granular filtering in APIAccesses.",
+                "properties": {
+                  "matchers": {
+                    "description": "Matchers defines a list of alternative rules for matching OpenAPI operations.",
+                    "items": {
+                      "additionalProperties": false,
+                      "description": "OperationMatcher defines criteria for matching an OpenAPI operation.",
+                      "minProperties": 1,
+                      "properties": {
+                        "methods": {
+                          "description": "Methods specifies the HTTP methods to be included for selection.",
+                          "items": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "maxItems": 10,
+                          "type": [
+                            "array",
+                            "null"
+                          ]
+                        },
+                        "path": {
+                          "description": "Path specifies the exact path of the operations to select.",
+                          "maxLength": 255,
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "x-kubernetes-validations": [
+                            {
+                              "message": "must start with a '/'",
+                              "rule": "self.startsWith('/')"
+                            },
+                            {
+                              "message": "cannot contains '../'",
+                              "rule": "!self.matches(r\"\"\"(\\/\\.\\.\\/)|(\\/\\.\\.$)\"\"\")"
+                            }
+                          ]
+                        },
+                        "pathPrefix": {
+                          "description": "PathPrefix specifies the path prefix of the operations to select.",
+                          "maxLength": 255,
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "x-kubernetes-validations": [
+                            {
+                              "message": "must start with a '/'",
+                              "rule": "self.startsWith('/')"
+                            },
+                            {
+                              "message": "cannot contains '../'",
+                              "rule": "!self.matches(r\"\"\"(\\/\\.\\.\\/)|(\\/\\.\\.$)\"\"\")"
+                            }
+                          ]
+                        },
+                        "pathRegex": {
+                          "description": "PathRegex specifies a regular expression pattern for matching operations based on their paths.",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "x-kubernetes-validations": [
+                        {
+                          "message": "path, pathPrefix and pathRegex are mutually exclusive",
+                          "rule": "[has(self.path), has(self.pathPrefix), has(self.pathRegex)].filter(x, x).size() <= 1"
+                        }
+                      ]
+                    },
+                    "maxItems": 100,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "name": {
+                    "description": "Name is the name of the OperationSet to reference in APIAccesses.",
+                    "maxLength": 253,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "matchers",
+                  "name"
+                ],
+                "type": [
+                  "object",
+                  "null"
+                ]
+              },
+              "maxItems": 100,
+              "type": [
+                "array",
+                "null"
+              ]
+            },
+            "override": {
+              "additionalProperties": false,
+              "description": "Override holds data used to override OpenAPI specification.",
+              "properties": {
+                "servers": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "url": {
+                        "type": "string",
+                        "x-kubernetes-validations": [
+                          {
+                            "message": "must be a valid URL",
+                            "rule": "isURL(self)"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "url"
+                    ],
+                    "type": [
+                      "object",
+                      "null"
+                    ]
+                  },
+                  "maxItems": 100,
+                  "minItems": 1,
+                  "type": "array"
+                }
+              },
+              "required": [
+                "servers"
+              ],
+              "type": [
+                "object",
+                "null"
+              ]
+            },
+            "path": {
+              "description": "Path specifies the endpoint path within the Kubernetes Service where the OpenAPI specification can be obtained.\nThe Service queried is determined by the associated Ingress, IngressRoute, or HTTPRoute resource to which the API is attached.\nIt's important to note that this option is incompatible if the Ingress or IngressRoute specifies multiple backend services.\nThe Path must be accessible via a GET request method and should serve a YAML or JSON document containing the OpenAPI specification.",
+              "maxLength": 255,
+              "type": [
+                "string",
+                "null"
+              ],
+              "x-kubernetes-validations": [
+                {
+                  "message": "must start with a '/'",
+                  "rule": "self.startsWith('/')"
+                },
+                {
+                  "message": "cannot contains '../'",
+                  "rule": "!self.matches(r\"\"\"(\\/\\.\\.\\/)|(\\/\\.\\.$)\"\"\")"
+                }
+              ]
+            },
+            "url": {
+              "description": "URL is a Traefik Hub agent accessible URL for obtaining the OpenAPI specification.\nThe URL must be accessible via a GET request method and should serve a YAML or JSON document containing the OpenAPI specification.",
+              "type": [
+                "string",
+                "null"
+              ],
+              "x-kubernetes-validations": [
+                {
+                  "message": "must be a valid URL",
+                  "rule": "isURL(self)"
+                }
+              ]
+            },
+            "validateRequestMethodAndPath": {
+              "description": "ValidateRequestMethodAndPath validates that the path and method matches an operation defined in the OpenAPI specification.\nThis option overrides the default behavior configured in the static configuration.",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ],
+          "x-kubernetes-validations": [
+            {
+              "message": "path or url must be defined",
+              "rule": "has(self.path) || has(self.url)"
+            }
+          ]
+        },
+        "versions": {
+          "description": "Versions are the different APIVersions available.",
+          "items": {
+            "additionalProperties": false,
+            "description": "APIVersionRef references an APIVersion.",
+            "properties": {
+              "name": {
+                "description": "Name of the APIVersion.",
+                "maxLength": 253,
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "type": [
+              "object",
+              "null"
+            ]
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "status": {
+      "additionalProperties": false,
+      "description": "The current status of this API.",
+      "properties": {
+        "hash": {
+          "description": "Hash is a hash representing the API.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "syncedAt": {
+          "format": "date-time",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  },
+  "type": "object",
+  "x-kubernetes-group-version-kind": [
+    {
+      "group": "hub.traefik.io",
+      "kind": "API",
+      "version": "v1alpha1"
+    }
+  ],
+  "x-kubernetes-selectable-fields": []
+}
