@@ -1,0 +1,559 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "description": "AIService is a Kubernetes-like Service to interact with a text-based LLM provider. It defines the parameters and credentials required to interact with various LLM providers.",
+  "properties": {
+    "apiVersion": {
+      "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "enum": [
+        "hub.traefik.io/v1alpha1"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "kind": {
+      "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "enum": [
+        "AIService"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "metadata": {
+      "$ref": "_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta",
+      "description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
+    },
+    "spec": {
+      "additionalProperties": false,
+      "description": "The desired behavior of this AIService.",
+      "properties": {
+        "anthropic": {
+          "additionalProperties": false,
+          "description": "Anthropic configures Anthropic backend.",
+          "properties": {
+            "model": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "params": {
+              "additionalProperties": false,
+              "description": "Params holds the LLM hyperparameters.",
+              "properties": {
+                "frequencyPenalty": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "maxTokens": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                },
+                "presencePenalty": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "temperature": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "topP": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                }
+              },
+              "type": [
+                "object",
+                "null"
+              ]
+            },
+            "token": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "token"
+          ],
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "azureOpenai": {
+          "additionalProperties": false,
+          "description": "AzureOpenAI configures AzureOpenAI.",
+          "properties": {
+            "apiKey": {
+              "type": "string"
+            },
+            "baseUrl": {
+              "type": "string"
+            },
+            "deploymentName": {
+              "type": "string"
+            },
+            "model": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "params": {
+              "additionalProperties": false,
+              "description": "Params holds the LLM hyperparameters.",
+              "properties": {
+                "frequencyPenalty": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "maxTokens": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                },
+                "presencePenalty": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "temperature": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "topP": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                }
+              },
+              "type": [
+                "object",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "apiKey",
+            "baseUrl",
+            "deploymentName"
+          ],
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "bedrock": {
+          "additionalProperties": false,
+          "description": "Bedrock configures Bedrock backend.",
+          "properties": {
+            "model": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "params": {
+              "additionalProperties": false,
+              "description": "Params holds the LLM hyperparameters.",
+              "properties": {
+                "frequencyPenalty": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "maxTokens": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                },
+                "presencePenalty": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "temperature": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "topP": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                }
+              },
+              "type": [
+                "object",
+                "null"
+              ]
+            },
+            "region": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "systemMessage": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "cohere": {
+          "additionalProperties": false,
+          "description": "Cohere configures Cohere backend.",
+          "properties": {
+            "model": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "params": {
+              "additionalProperties": false,
+              "description": "Params holds the LLM hyperparameters.",
+              "properties": {
+                "frequencyPenalty": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "maxTokens": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                },
+                "presencePenalty": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "temperature": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "topP": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                }
+              },
+              "type": [
+                "object",
+                "null"
+              ]
+            },
+            "token": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "token"
+          ],
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "gemini": {
+          "additionalProperties": false,
+          "description": "Gemini configures Gemini backend.",
+          "properties": {
+            "apiKey": {
+              "type": "string"
+            },
+            "model": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "params": {
+              "additionalProperties": false,
+              "description": "Params holds the LLM hyperparameters.",
+              "properties": {
+                "frequencyPenalty": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "maxTokens": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                },
+                "presencePenalty": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "temperature": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "topP": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                }
+              },
+              "type": [
+                "object",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "apiKey"
+          ],
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "mistral": {
+          "additionalProperties": false,
+          "description": "Mistral configures Mistral AI backend.",
+          "properties": {
+            "apiKey": {
+              "type": "string"
+            },
+            "model": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "params": {
+              "additionalProperties": false,
+              "description": "Params holds the LLM hyperparameters.",
+              "properties": {
+                "frequencyPenalty": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "maxTokens": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                },
+                "presencePenalty": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "temperature": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "topP": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                }
+              },
+              "type": [
+                "object",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "apiKey"
+          ],
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "ollama": {
+          "additionalProperties": false,
+          "description": "Ollama configures Ollama backend.",
+          "properties": {
+            "baseUrl": {
+              "type": "string"
+            },
+            "model": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "params": {
+              "additionalProperties": false,
+              "description": "Params holds the LLM hyperparameters.",
+              "properties": {
+                "frequencyPenalty": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "maxTokens": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                },
+                "presencePenalty": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "temperature": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "topP": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                }
+              },
+              "type": [
+                "object",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "baseUrl"
+          ],
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "openai": {
+          "additionalProperties": false,
+          "description": "OpenAI configures OpenAI.",
+          "properties": {
+            "model": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "params": {
+              "additionalProperties": false,
+              "description": "Params holds the LLM hyperparameters.",
+              "properties": {
+                "frequencyPenalty": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "maxTokens": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                },
+                "presencePenalty": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "temperature": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "topP": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                }
+              },
+              "type": [
+                "object",
+                "null"
+              ]
+            },
+            "token": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "token"
+          ],
+          "type": [
+            "object",
+            "null"
+          ]
+        }
+      },
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  },
+  "type": "object",
+  "x-kubernetes-group-version-kind": [
+    {
+      "group": "hub.traefik.io",
+      "kind": "AIService",
+      "version": "v1alpha1"
+    }
+  ]
+}

@@ -1,0 +1,346 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "description": "IngressRouteTCP is the CRD implementation of a Traefik TCP Router.",
+  "properties": {
+    "apiVersion": {
+      "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "enum": [
+        "traefik.io/v1alpha1"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "kind": {
+      "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "enum": [
+        "IngressRouteTCP"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "metadata": {
+      "$ref": "_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta",
+      "description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
+    },
+    "spec": {
+      "additionalProperties": false,
+      "description": "IngressRouteTCPSpec defines the desired state of IngressRouteTCP.",
+      "properties": {
+        "entryPoints": {
+          "description": "EntryPoints defines the list of entry point names to bind to.\nEntry points have to be configured in the static configuration.\nMore info: https://doc.traefik.io/traefik/v3.3/routing/entrypoints/\nDefault: all.",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "routes": {
+          "description": "Routes defines the list of routes.",
+          "items": {
+            "additionalProperties": false,
+            "description": "RouteTCP holds the TCP route configuration.",
+            "properties": {
+              "match": {
+                "description": "Match defines the router's rule.\nMore info: https://doc.traefik.io/traefik/v3.3/routing/routers/#rule_1",
+                "type": "string"
+              },
+              "middlewares": {
+                "description": "Middlewares defines the list of references to MiddlewareTCP resources.",
+                "items": {
+                  "additionalProperties": false,
+                  "description": "ObjectReference is a generic reference to a Traefik resource.",
+                  "properties": {
+                    "name": {
+                      "description": "Name defines the name of the referenced Traefik resource.",
+                      "type": "string"
+                    },
+                    "namespace": {
+                      "description": "Namespace defines the namespace of the referenced Traefik resource.",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ],
+                  "type": [
+                    "object",
+                    "null"
+                  ]
+                },
+                "type": [
+                  "array",
+                  "null"
+                ]
+              },
+              "priority": {
+                "description": "Priority defines the router's priority.\nMore info: https://doc.traefik.io/traefik/v3.3/routing/routers/#priority_1",
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              },
+              "services": {
+                "description": "Services defines the list of TCP services.",
+                "items": {
+                  "additionalProperties": false,
+                  "description": "ServiceTCP defines an upstream TCP service to proxy traffic to.",
+                  "properties": {
+                    "name": {
+                      "description": "Name defines the name of the referenced Kubernetes Service.",
+                      "type": "string"
+                    },
+                    "namespace": {
+                      "description": "Namespace defines the namespace of the referenced Kubernetes Service.",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "nativeLB": {
+                      "description": "NativeLB controls, when creating the load-balancer,\nwhether the LB's children are directly the pods IPs or if the only child is the Kubernetes Service clusterIP.\nThe Kubernetes Service itself does load-balance to the pods.\nBy default, NativeLB is false.",
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    },
+                    "nodePortLB": {
+                      "description": "NodePortLB controls, when creating the load-balancer,\nwhether the LB's children are directly the nodes internal IPs using the nodePort when the service type is NodePort.\nIt allows services to be reachable when Traefik runs externally from the Kubernetes cluster but within the same network of the nodes.\nBy default, NodePortLB is false.",
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    },
+                    "port": {
+                      "description": "Port defines the port of a Kubernetes Service.\nThis can be a reference to a named port.",
+                      "x-kubernetes-int-or-string": true
+                    },
+                    "proxyProtocol": {
+                      "additionalProperties": false,
+                      "description": "ProxyProtocol defines the PROXY protocol configuration.\nMore info: https://doc.traefik.io/traefik/v3.3/routing/services/#proxy-protocol",
+                      "properties": {
+                        "version": {
+                          "description": "Version defines the PROXY Protocol version to use.",
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        }
+                      },
+                      "type": [
+                        "object",
+                        "null"
+                      ]
+                    },
+                    "serversTransport": {
+                      "description": "ServersTransport defines the name of ServersTransportTCP resource to use.\nIt allows to configure the transport between Traefik and your servers.\nCan only be used on a Kubernetes Service.",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "terminationDelay": {
+                      "description": "TerminationDelay defines the deadline that the proxy sets, after one of its connected peers indicates\nit has closed the writing capability of its connection, to close the reading capability as well,\nhence fully terminating the connection.\nIt is a duration in milliseconds, defaulting to 100.\nA negative value means an infinite deadline (i.e. the reading capability is never closed).\nDeprecated: TerminationDelay will not be supported in future APIVersions, please use ServersTransport to configure the TerminationDelay instead.",
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
+                    },
+                    "tls": {
+                      "description": "TLS determines whether to use TLS when dialing with the backend.",
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    },
+                    "weight": {
+                      "description": "Weight defines the weight used when balancing requests between multiple Kubernetes Service.",
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "port"
+                  ],
+                  "type": [
+                    "object",
+                    "null"
+                  ]
+                },
+                "type": [
+                  "array",
+                  "null"
+                ]
+              },
+              "syntax": {
+                "description": "Syntax defines the router's rule syntax.\nMore info: https://doc.traefik.io/traefik/v3.3/routing/routers/#rulesyntax_1",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "match"
+            ],
+            "type": [
+              "object",
+              "null"
+            ]
+          },
+          "type": "array"
+        },
+        "tls": {
+          "additionalProperties": false,
+          "description": "TLS defines the TLS configuration on a layer 4 / TCP Route.\nMore info: https://doc.traefik.io/traefik/v3.3/routing/routers/#tls_1",
+          "properties": {
+            "certResolver": {
+              "description": "CertResolver defines the name of the certificate resolver to use.\nCert resolvers have to be configured in the static configuration.\nMore info: https://doc.traefik.io/traefik/v3.3/https/acme/#certificate-resolvers",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "domains": {
+              "description": "Domains defines the list of domains that will be used to issue certificates.\nMore info: https://doc.traefik.io/traefik/v3.3/routing/routers/#domains",
+              "items": {
+                "additionalProperties": false,
+                "description": "Domain holds a domain name with SANs.",
+                "properties": {
+                  "main": {
+                    "description": "Main defines the main domain name.",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sans": {
+                    "description": "SANs defines the subject alternative domain names.",
+                    "items": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "type": [
+                      "array",
+                      "null"
+                    ]
+                  }
+                },
+                "type": [
+                  "object",
+                  "null"
+                ]
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            },
+            "options": {
+              "additionalProperties": false,
+              "description": "Options defines the reference to a TLSOption, that specifies the parameters of the TLS connection.\nIf not defined, the `default` TLSOption is used.\nMore info: https://doc.traefik.io/traefik/v3.3/https/tls/#tls-options",
+              "properties": {
+                "name": {
+                  "description": "Name defines the name of the referenced Traefik resource.",
+                  "type": "string"
+                },
+                "namespace": {
+                  "description": "Namespace defines the namespace of the referenced Traefik resource.",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "name"
+              ],
+              "type": [
+                "object",
+                "null"
+              ]
+            },
+            "passthrough": {
+              "description": "Passthrough defines whether a TLS router will terminate the TLS connection.",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "secretName": {
+              "description": "SecretName is the name of the referenced Kubernetes Secret to specify the certificate details.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "store": {
+              "additionalProperties": false,
+              "description": "Store defines the reference to the TLSStore, that will be used to store certificates.\nPlease note that only `default` TLSStore can be used.",
+              "properties": {
+                "name": {
+                  "description": "Name defines the name of the referenced Traefik resource.",
+                  "type": "string"
+                },
+                "namespace": {
+                  "description": "Namespace defines the namespace of the referenced Traefik resource.",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "name"
+              ],
+              "type": [
+                "object",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "routes"
+      ],
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "metadata",
+    "spec"
+  ],
+  "type": "object",
+  "x-kubernetes-group-version-kind": [
+    {
+      "group": "traefik.io",
+      "kind": "IngressRouteTCP",
+      "version": "v1alpha1"
+    }
+  ]
+}
