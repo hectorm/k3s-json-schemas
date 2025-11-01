@@ -28,7 +28,7 @@ jobs:
         run: |
           ./scripts/generate-schemas.sh
       - name: "Upload schemas artifact"
-        uses: "actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02"
+        uses: "actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4"
         with:
           name: "schemas-${{ inputs.k3s-version }}"
           path: "./schemas/"
@@ -50,7 +50,7 @@ jobs:
       GIT_REMOTE: "https://oauth2:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
     steps:
       - name: "Download schemas artifact"
-        uses: "actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0"
+        uses: "actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53"
         with:
           name: "schemas-${{ inputs.k3s-version }}"
           path: "./schemas/"
