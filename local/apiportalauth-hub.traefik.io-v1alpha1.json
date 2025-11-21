@@ -1,0 +1,188 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "APIPortalAuth defines the authentication configuration for an APIPortal.",
+  "properties": {
+    "apiVersion": {
+      "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "enum": [
+        "hub.traefik.io/v1alpha1"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "kind": {
+      "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "enum": [
+        "APIPortalAuth"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "metadata": {
+      "$ref": "_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta",
+      "description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
+    },
+    "spec": {
+      "description": "The desired behavior of this APIPortalAuth.",
+      "properties": {
+        "oidc": {
+          "description": "OIDC configures the OIDC authentication.",
+          "properties": {
+            "claims": {
+              "description": "Claims configures JWT claim mappings for user attributes.",
+              "properties": {
+                "company": {
+                  "description": "Company is the JWT claim for user company.",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "email": {
+                  "description": "Email is the JWT claim for user email.",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "firstname": {
+                  "description": "Firstname is the JWT claim for user first name.",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "groups": {
+                  "description": "Groups is the JWT claim for user groups. This field is required for authorization.",
+                  "type": "string"
+                },
+                "lastname": {
+                  "description": "Lastname is the JWT claim for user last name.",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "userId": {
+                  "description": "UserID is the JWT claim for user ID mapping.",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "groups"
+              ],
+              "type": "object"
+            },
+            "issuerUrl": {
+              "description": "IssuerURL is the OIDC provider issuer URL.",
+              "type": "string",
+              "x-kubernetes-validations": [
+                {
+                  "message": "must be a valid URL",
+                  "rule": "isURL(self)"
+                }
+              ]
+            },
+            "scopes": {
+              "description": "Scopes is a list of OAuth2 scopes.",
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            },
+            "secretName": {
+              "description": "SecretName is the name of the Kubernetes Secret containing clientId and clientSecret keys.",
+              "maxLength": 253,
+              "type": "string"
+            },
+            "syncedAttributes": {
+              "description": "SyncedAttributes is a list of additional attributes to sync from the OIDC provider.\nEach attribute must correspond to a configured claim field.",
+              "items": {
+                "enum": [
+                  "groups",
+                  "userId",
+                  "firstname",
+                  "lastname",
+                  "email",
+                  "company"
+                ],
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "maxItems": 6,
+              "type": [
+                "array",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "claims",
+            "issuerUrl",
+            "secretName"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "oidc"
+      ],
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "status": {
+      "description": "The current status of this APIPortalAuth.",
+      "properties": {
+        "hash": {
+          "description": "Hash is a hash representing the APIPortalAuth.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "syncedAt": {
+          "format": "date-time",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  },
+  "type": "object",
+  "x-kubernetes-group-version-kind": [
+    {
+      "group": "hub.traefik.io",
+      "kind": "APIPortalAuth",
+      "version": "v1alpha1"
+    }
+  ]
+}
