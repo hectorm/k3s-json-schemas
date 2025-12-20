@@ -1,0 +1,243 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "APIPortal defines a developer portal for accessing the documentation of APIs.",
+  "properties": {
+    "apiVersion": {
+      "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "enum": [
+        "hub.traefik.io/v1alpha1"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "kind": {
+      "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "enum": [
+        "APIPortal"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "metadata": {
+      "$ref": "_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta",
+      "description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
+    },
+    "spec": {
+      "description": "The desired behavior of this APIPortal.",
+      "properties": {
+        "auth": {
+          "description": "Auth references the APIPortalAuth resource for authentication configuration.",
+          "properties": {
+            "name": {
+              "description": "Name is the name of the APIPortalAuth resource.",
+              "maxLength": 253,
+              "type": "string"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "description": {
+          "description": "Description of the APIPortal.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "title": {
+          "description": "Title is the public facing name of the APIPortal.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "trustedUrls": {
+          "description": "TrustedURLs are the urls that are trusted by the OAuth 2.0 authorization server.",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "maxItems": 1,
+          "minItems": 1,
+          "type": "array",
+          "x-kubernetes-validations": [
+            {
+              "message": "must be a valid URLs",
+              "rule": "self.all(x, isURL(x))"
+            }
+          ]
+        },
+        "ui": {
+          "description": "UI holds the UI customization options.",
+          "properties": {
+            "logoUrl": {
+              "description": "LogoURL is the public URL of the logo.",
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "trustedUrls"
+      ],
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "status": {
+      "description": "The current status of this APIPortal.",
+      "properties": {
+        "hash": {
+          "description": "Hash is a hash representing the APIPortal.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "oidc": {
+          "description": "OIDC is the OIDC configuration for accessing the exposed APIPortal WebUI.",
+          "properties": {
+            "clientId": {
+              "description": "ClientID is the OIDC ClientID for accessing the exposed APIPortal WebUI.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "companyClaim": {
+              "description": "CompanyClaim is the name of the JWT claim containing the user company.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "emailClaim": {
+              "description": "EmailClaim is the name of the JWT claim containing the user email.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "firstnameClaim": {
+              "description": "FirstnameClaim is the name of the JWT claim containing the user firstname.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "generic": {
+              "description": "Generic indicates whether or not the APIPortal authentication relies on Generic OIDC.",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "groupsClaim": {
+              "description": "GroupsClaim is the name of the JWT claim containing the user groups.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "issuer": {
+              "description": "Issuer is the OIDC issuer for accessing the exposed APIPortal WebUI.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "lastnameClaim": {
+              "description": "LastnameClaim is the name of the JWT claim containing the user lastname.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "scopes": {
+              "description": "Scopes is the OIDC scopes for getting user attributes during the authentication to the exposed APIPortal WebUI.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "secretName": {
+              "description": "SecretName is the name of the secret containing the OIDC ClientSecret for accessing the exposed APIPortal WebUI.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "syncedAttributes": {
+              "description": "SyncedAttributes configure the user attributes to sync.",
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            },
+            "userIdClaim": {
+              "description": "UserIDClaim is the name of the JWT claim containing the user ID.",
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "syncedAt": {
+          "format": "date-time",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  },
+  "type": "object",
+  "x-kubernetes-group-version-kind": [
+    {
+      "group": "hub.traefik.io",
+      "kind": "APIPortal",
+      "version": "v1alpha1"
+    }
+  ]
+}
