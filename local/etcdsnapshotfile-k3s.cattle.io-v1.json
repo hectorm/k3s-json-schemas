@@ -1,0 +1,195 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "ETCDSnapshot tracks a point-in-time snapshot of the etcd datastore.",
+  "properties": {
+    "apiVersion": {
+      "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "enum": [
+        "k3s.cattle.io/v1"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "kind": {
+      "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "enum": [
+        "ETCDSnapshotFile"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "metadata": {
+      "$ref": "_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta",
+      "description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
+    },
+    "spec": {
+      "description": "Spec defines properties of an etcd snapshot file",
+      "properties": {
+        "location": {
+          "description": "Location is the absolute file:// or s3:// URI address of the snapshot.",
+          "type": "string"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "Metadata contains point-in-time snapshot of the contents of the\nk3s-etcd-snapshot-extra-metadata ConfigMap's data field, at the time the\nsnapshot was taken. This is intended to contain data about cluster state\nthat may be important for an external system to have available when restoring\nthe snapshot.",
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "nodeName": {
+          "description": "NodeName contains the name of the node that took the snapshot.",
+          "type": "string"
+        },
+        "s3": {
+          "description": "S3 contains extra metadata about the S3 storage system holding the\nsnapshot. This is guaranteed to be set for all snapshots uploaded to S3.\nIf not specified, the snapshot was not uploaded to S3.",
+          "properties": {
+            "bucket": {
+              "description": "Bucket is the bucket holding the snapshot",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "bucketLookup": {
+              "description": "BucketLookup is the bucket lookup type, one of 'auto', 'dns', 'path'. Default if empty is 'auto'.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "endpoint": {
+              "description": "Endpoint is the host or host:port of the S3 service",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "endpointCA": {
+              "description": "EndpointCA is the path on disk to the S3 service's trusted CA list. Leave empty to use the OS CA bundle.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "insecure": {
+              "description": "Insecure is true if the S3 service uses HTTP instead of HTTPS",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "prefix": {
+              "description": "Prefix is the prefix in which the snapshot file is stored.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "region": {
+              "description": "Region is the region of the S3 service",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "skipSSLVerify": {
+              "description": "SkipSSLVerify is true if TLS certificate verification is disabled",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "snapshotName": {
+          "description": "SnapshotName contains the base name of the snapshot file. CLI actions that act\non snapshots stored locally or within a pre-configured S3 bucket and\nprefix usually take the snapshot name as their argument.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "location",
+        "nodeName",
+        "snapshotName"
+      ],
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "status": {
+      "description": "Status represents current information about a snapshot.",
+      "properties": {
+        "creationTime": {
+          "description": "CreationTime is the timestamp when the snapshot was taken by etcd.",
+          "format": "date-time",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "error": {
+          "description": "Error is the last observed error during snapshot creation, if any.\nIf the snapshot is retried, this field will be cleared on success.",
+          "properties": {
+            "message": {
+              "description": "Message is a string detailing the encountered error during snapshot creation if specified.\nNOTE: message may be logged, and it should not contain sensitive information.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "time": {
+              "description": "Time is the timestamp when the error was encountered.",
+              "format": "date-time",
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "readyToUse": {
+          "description": "ReadyToUse indicates that the snapshot is available to be restored.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "size": {
+          "description": "Size is the size of the snapshot file, in bytes. If not specified, the snapshot failed.",
+          "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+          "x-kubernetes-int-or-string": true
+        }
+      },
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  },
+  "type": "object",
+  "x-kubernetes-group-version-kind": [
+    {
+      "group": "k3s.cattle.io",
+      "kind": "ETCDSnapshotFile",
+      "version": "v1"
+    }
+  ]
+}
