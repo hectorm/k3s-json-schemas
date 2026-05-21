@@ -1,0 +1,196 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "ContainerStatus contains details for the current status of this container.",
+  "properties": {
+    "allocatedResources": {
+      "additionalProperties": {
+        "$ref": "_definitions.json#/definitions/io.k8s.apimachinery.pkg.api.resource.Quantity"
+      },
+      "description": "AllocatedResources represents the compute resources allocated for this container by the node. Kubelet sets this value to Container.Resources.Requests upon successful pod admission and after successfully admitting desired pod resize.",
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "allocatedResourcesStatus": {
+      "description": "AllocatedResourcesStatus represents the status of various resources allocated for this Pod.",
+      "items": {
+        "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.ResourceStatus"
+      },
+      "type": [
+        "array",
+        "null"
+      ],
+      "x-kubernetes-list-map-keys": [
+        "name"
+      ],
+      "x-kubernetes-list-type": "map",
+      "x-kubernetes-patch-merge-key": "name",
+      "x-kubernetes-patch-strategy": "merge"
+    },
+    "containerID": {
+      "description": "ContainerID is the ID of the container in the format '<type>://<container_id>'. Where type is a container runtime identifier, returned from Version call of CRI API (for example \"containerd\").",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "image": {
+      "description": "Image is the name of container image that the container is running. The container image may not match the image used in the PodSpec, as it may have been resolved by the runtime. More info: https://kubernetes.io/docs/concepts/containers/images.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "imageID": {
+      "description": "ImageID is the image ID of the container's image. The image ID may not match the image ID of the image used in the PodSpec, as it may have been resolved by the runtime.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "lastState": {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.ContainerState",
+      "description": "LastTerminationState holds the last termination state of the container to help debug container crashes and restarts. This field is not populated if the container is still running and RestartCount is 0."
+    },
+    "name": {
+      "description": "Name is a DNS_LABEL representing the unique name of the container. Each container in a pod must have a unique name across all container types. Cannot be updated.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "ready": {
+      "description": "Ready specifies whether the container is currently passing its readiness check. The value will change as readiness probes keep executing. If no readiness probes are specified, this field defaults to true once the container is fully started (see Started field).\n\nThe value is typically used to determine whether a container is ready to accept traffic.",
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "resources": {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.ResourceRequirements",
+      "description": "Resources represents the compute resource requests and limits that have been successfully enacted on the running container after it has been started or has been successfully resized."
+    },
+    "restartCount": {
+      "description": "RestartCount holds the number of times the container has been restarted. Kubelet makes an effort to always increment the value, but there are cases when the state may be lost due to node restarts and then the value may be reset to 0. The value is never negative.",
+      "format": "int32",
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "started": {
+      "description": "Started indicates whether the container has finished its postStart lifecycle hook and passed its startup probe. Initialized as false, becomes true after startupProbe is considered successful. Resets to false when the container is restarted, or if kubelet loses state temporarily. In both cases, startup probes will run again. Is always true when no startupProbe is defined and container is running and has passed the postStart lifecycle hook. The null value must be treated the same as false.",
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "state": {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.ContainerState",
+      "description": "State holds details about the container's current condition."
+    },
+    "stopSignal": {
+      "description": "StopSignal reports the effective stop signal for this container\n\nPossible enum values:\n - `\"SIGABRT\"`\n - `\"SIGALRM\"`\n - `\"SIGBUS\"`\n - `\"SIGCHLD\"`\n - `\"SIGCLD\"`\n - `\"SIGCONT\"`\n - `\"SIGFPE\"`\n - `\"SIGHUP\"`\n - `\"SIGILL\"`\n - `\"SIGINT\"`\n - `\"SIGIO\"`\n - `\"SIGIOT\"`\n - `\"SIGKILL\"`\n - `\"SIGPIPE\"`\n - `\"SIGPOLL\"`\n - `\"SIGPROF\"`\n - `\"SIGPWR\"`\n - `\"SIGQUIT\"`\n - `\"SIGRTMAX\"`\n - `\"SIGRTMAX-1\"`\n - `\"SIGRTMAX-10\"`\n - `\"SIGRTMAX-11\"`\n - `\"SIGRTMAX-12\"`\n - `\"SIGRTMAX-13\"`\n - `\"SIGRTMAX-14\"`\n - `\"SIGRTMAX-2\"`\n - `\"SIGRTMAX-3\"`\n - `\"SIGRTMAX-4\"`\n - `\"SIGRTMAX-5\"`\n - `\"SIGRTMAX-6\"`\n - `\"SIGRTMAX-7\"`\n - `\"SIGRTMAX-8\"`\n - `\"SIGRTMAX-9\"`\n - `\"SIGRTMIN\"`\n - `\"SIGRTMIN+1\"`\n - `\"SIGRTMIN+10\"`\n - `\"SIGRTMIN+11\"`\n - `\"SIGRTMIN+12\"`\n - `\"SIGRTMIN+13\"`\n - `\"SIGRTMIN+14\"`\n - `\"SIGRTMIN+15\"`\n - `\"SIGRTMIN+2\"`\n - `\"SIGRTMIN+3\"`\n - `\"SIGRTMIN+4\"`\n - `\"SIGRTMIN+5\"`\n - `\"SIGRTMIN+6\"`\n - `\"SIGRTMIN+7\"`\n - `\"SIGRTMIN+8\"`\n - `\"SIGRTMIN+9\"`\n - `\"SIGSEGV\"`\n - `\"SIGSTKFLT\"`\n - `\"SIGSTOP\"`\n - `\"SIGSYS\"`\n - `\"SIGTERM\"`\n - `\"SIGTRAP\"`\n - `\"SIGTSTP\"`\n - `\"SIGTTIN\"`\n - `\"SIGTTOU\"`\n - `\"SIGURG\"`\n - `\"SIGUSR1\"`\n - `\"SIGUSR2\"`\n - `\"SIGVTALRM\"`\n - `\"SIGWINCH\"`\n - `\"SIGXCPU\"`\n - `\"SIGXFSZ\"`",
+      "enum": [
+        "SIGABRT",
+        "SIGALRM",
+        "SIGBUS",
+        "SIGCHLD",
+        "SIGCLD",
+        "SIGCONT",
+        "SIGFPE",
+        "SIGHUP",
+        "SIGILL",
+        "SIGINT",
+        "SIGIO",
+        "SIGIOT",
+        "SIGKILL",
+        "SIGPIPE",
+        "SIGPOLL",
+        "SIGPROF",
+        "SIGPWR",
+        "SIGQUIT",
+        "SIGRTMAX",
+        "SIGRTMAX-1",
+        "SIGRTMAX-10",
+        "SIGRTMAX-11",
+        "SIGRTMAX-12",
+        "SIGRTMAX-13",
+        "SIGRTMAX-14",
+        "SIGRTMAX-2",
+        "SIGRTMAX-3",
+        "SIGRTMAX-4",
+        "SIGRTMAX-5",
+        "SIGRTMAX-6",
+        "SIGRTMAX-7",
+        "SIGRTMAX-8",
+        "SIGRTMAX-9",
+        "SIGRTMIN",
+        "SIGRTMIN+1",
+        "SIGRTMIN+10",
+        "SIGRTMIN+11",
+        "SIGRTMIN+12",
+        "SIGRTMIN+13",
+        "SIGRTMIN+14",
+        "SIGRTMIN+15",
+        "SIGRTMIN+2",
+        "SIGRTMIN+3",
+        "SIGRTMIN+4",
+        "SIGRTMIN+5",
+        "SIGRTMIN+6",
+        "SIGRTMIN+7",
+        "SIGRTMIN+8",
+        "SIGRTMIN+9",
+        "SIGSEGV",
+        "SIGSTKFLT",
+        "SIGSTOP",
+        "SIGSYS",
+        "SIGTERM",
+        "SIGTRAP",
+        "SIGTSTP",
+        "SIGTTIN",
+        "SIGTTOU",
+        "SIGURG",
+        "SIGUSR1",
+        "SIGUSR2",
+        "SIGVTALRM",
+        "SIGWINCH",
+        "SIGXCPU",
+        "SIGXFSZ"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "user": {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.ContainerUser",
+      "description": "User represents user identity information initially attached to the first process of the container"
+    },
+    "volumeMounts": {
+      "description": "Status of volume mounts.",
+      "items": {
+        "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.VolumeMountStatus"
+      },
+      "type": [
+        "array",
+        "null"
+      ],
+      "x-kubernetes-list-map-keys": [
+        "mountPath"
+      ],
+      "x-kubernetes-list-type": "map",
+      "x-kubernetes-patch-merge-key": "mountPath",
+      "x-kubernetes-patch-strategy": "merge"
+    }
+  },
+  "required": [
+    "name",
+    "ready",
+    "restartCount",
+    "image",
+    "imageID"
+  ],
+  "type": "object"
+}
