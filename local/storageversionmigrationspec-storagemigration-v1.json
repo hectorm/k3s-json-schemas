@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "Spec of the storage version migration.",
+  "properties": {
+    "resource": {
+      "$ref": "_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.GroupResource",
+      "description": "The resource that is being migrated. The migrator sends requests to the endpoint serving the resource. Immutable."
+    }
+  },
+  "required": [
+    "resource"
+  ],
+  "type": "object"
+}
