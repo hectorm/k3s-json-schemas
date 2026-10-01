@@ -1,0 +1,11 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "VolumeStatus represents the status of a mounted volume. At most one of its members must be specified.",
+  "properties": {
+    "image": {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.ImageVolumeStatus",
+      "description": "image represents an OCI object (a container image or artifact) pulled and mounted on the kubelet's host machine."
+    }
+  },
+  "type": "object"
+}
