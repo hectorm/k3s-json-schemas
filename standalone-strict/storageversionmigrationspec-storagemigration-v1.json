@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "description": "Spec of the storage version migration.",
+  "properties": {
+    "resource": {
+      "additionalProperties": false,
+      "description": "GroupResource specifies a Group and a Resource, but does not force a version.  This is useful for identifying concepts during lookup stages without having partially valid types",
+      "properties": {
+        "group": {
+          "type": "string"
+        },
+        "resource": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "group",
+        "resource"
+      ],
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "resource"
+  ],
+  "type": "object"
+}

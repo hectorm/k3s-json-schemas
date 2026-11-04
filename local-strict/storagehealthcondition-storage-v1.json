@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "description": "StorageHealthCondition represents an adverse health condition reported by a CSI driver for its storage backend on a node.",
+  "properties": {
+    "accessMode": {
+      "description": "accessMode is the access mode affected. Nil means all access modes are affected.\n\nPossible enum values:\n - `\"ReadOnlyMany\"` can be mounted in read-only mode to many hosts\n - `\"ReadWriteMany\"` can be mounted in read/write mode to many hosts\n - `\"ReadWriteOnce\"` can be mounted in read/write mode to exactly 1 host\n - `\"ReadWriteOncePod\"` can be mounted in read/write mode to exactly 1 pod cannot be used in combination with other access modes",
+      "enum": [
+        "ReadOnlyMany",
+        "ReadWriteMany",
+        "ReadWriteOnce",
+        "ReadWriteOncePod"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "lastTransitionTime": {
+      "$ref": "_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.Time",
+      "description": "lastTransitionTime is when this condition first appeared at its current state."
+    },
+    "message": {
+      "description": "message is a human-readable description. Maximum permitted length of a message is 1024 characters.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "reason": {
+      "description": "reason is a brief CamelCase machine-parseable reason. Maximum permitted length of a reason is 256 characters.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "description": "status is the health status category. One of \"StorageUnreachable\", \"StorageDegraded\".\n\nPossible enum values:\n - `\"StorageDegraded\"` indicates the storage backend is functioning with reduced capability.\n - `\"StorageUnreachable\"` indicates the storage backend is unreachable.",
+      "enum": [
+        "StorageDegraded",
+        "StorageUnreachable"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "volumeMode": {
+      "description": "volumeMode is the volume mode affected. Nil means both are affected.\n\nPossible enum values:\n - `\"Block\"` means the volume will not be formatted with a filesystem and will remain a raw block device.\n - `\"Filesystem\"` means the volume will be or is formatted with a filesystem.",
+      "enum": [
+        "Block",
+        "Filesystem"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "status",
+    "reason"
+  ],
+  "type": "object"
+}
