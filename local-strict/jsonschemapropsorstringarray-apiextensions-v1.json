@@ -1,0 +1,6 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "description": "JSONSchemaPropsOrStringArray represents a JSONSchemaProps or a string array.",
+  "type": "object"
+}
